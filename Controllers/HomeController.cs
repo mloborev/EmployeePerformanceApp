@@ -23,6 +23,7 @@ namespace EmployeePerformanceApp.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.YourName = User.Identity.Name;
             return View();
         }
 

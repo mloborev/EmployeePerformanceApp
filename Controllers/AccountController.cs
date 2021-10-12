@@ -45,9 +45,7 @@ namespace EmployeePerformanceApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string loginFromModel = model.Login;
-                string passwordFromModel = model.Password;
-                User user = await _userRepository.GetUserByLoginPassword(loginFromModel, passwordFromModel);
+                User user = await _userRepository.GetUserByLoginPassword(model);
 
                 if (user != null)
                 {
