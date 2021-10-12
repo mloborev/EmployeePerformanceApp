@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading;
 
 namespace EmployeePerformanceApp.Repositories
 {
@@ -32,16 +35,18 @@ namespace EmployeePerformanceApp.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetCurrentUser()
         {
+            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            //var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
             int userId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
             User user = await db.Users.Where(u => u.Id = userId).FirstOrDefaultAsync();
             return user;
         }
 
-        public async Task<User> GetUserByLoginPassword(LoginModel model)
+        public async Task<User> GetUserByLoginPassword(string loginFromModel, string passwordFromModel)
         {
-            User user = await db.Users.Include(u => u.Role).Where(u => u.Login == model.Login && u.Password == model.Password).FirstOrDefaultAsync();
+            User user = await db.Users.Include(u => u.Role).Where(u => u.Login == loginFromModel && u.Password == passwordFromModel).FirstOrDefaultAsync();
             return user;
         }
     }

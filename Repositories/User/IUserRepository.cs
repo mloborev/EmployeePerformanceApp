@@ -8,8 +8,8 @@ namespace EmployeePerformanceApp.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetUserById(int id);
-        Task<User> GetUserByLoginPassword(LoginModel model);
+        Task<User> GetCurrentUser();
+        Task<User> GetUserByLoginPassword(string loginFromModel, string passwordFromModel);
         Task<List<User>> GetAllData();
         Task AddUser();
         Task DeleteUser();
