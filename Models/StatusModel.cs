@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Models
 {
-    public class Status
+    public class StatusModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<User> Users { get; set; }
-        public Status()
+        public List<UserModel> Users { get; set; }
+        public StatusModel()
         {
-            Users = new List<User>();
+            Users = new List<UserModel>();
         }
     }
 }

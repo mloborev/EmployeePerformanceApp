@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Models
 {
-    public class User
+    public class UserModel
     {
         public int Id { get; set; }
         public string Surname { get; set; }
@@ -16,8 +16,8 @@ namespace EmployeePerformanceApp.Models
         public int StatusId { get; set; }
         public int? DepartmentId { get; set; }
 
-        public Role Role { get; set; }
-        public Status Status { get; set; }
-        public Department Department { get; set; }
+        public RoleModel Role { get; set; }
+        public StatusModel Status { get; set; }
+        public DepartmentModel Department { get; set; }
     }
 }
