@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Models
 {
-    public class RegisterModel
+    public class Parameter
     {
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Coefficient { get; set; }
     }
 }

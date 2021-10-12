@@ -34,8 +34,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<User> GetUserById(int id)
         {
-            int userId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
-            User user = await db.Users.Where(u => u.Id = userId).FirstOrDefaultAsync();
+            User user = await db.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             return user;
         }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Models
 {
-    public class MarkModel
+    public class Mark
     {
         public int Id { get; set; }
         public int ParameterId { get; set; }
