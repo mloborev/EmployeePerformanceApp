@@ -34,7 +34,7 @@ namespace EmployeePerformanceApp
             {
                 //options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
                 options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                //options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -67,7 +67,7 @@ namespace EmployeePerformanceApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

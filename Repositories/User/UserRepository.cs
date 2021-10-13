@@ -27,9 +27,9 @@ namespace EmployeePerformanceApp.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAllData()
+        public async Task<List<User>> GetAllData()
         {
-            throw new NotImplementedException();
+            return await db.Users.ToListAsync();
         }
 
         public async Task<User> GetUserById(int id)
@@ -38,9 +38,9 @@ namespace EmployeePerformanceApp.Repositories
             return user;
         }
 
-        public async Task<User> GetUserByLoginPassword(LoginModel model)
+        public async Task<User> GetUserByLoginPassword(string userLogin, string userPassword)
         {
-            User user = await db.Users.Include(u => u.Role).Where(u => u.Login == model.Login && u.Password == model.Password).FirstOrDefaultAsync();
+            User user = await db.Users.Include(u => u.Role).Where(u => u.Login == userLogin && u.Password == userPassword).FirstOrDefaultAsync();
             return user;
         }
     }
