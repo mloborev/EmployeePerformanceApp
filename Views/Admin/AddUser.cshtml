@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<a asp-action="Index">Home</a>
+
+<form method="post" asp-action="AddUser">
+
+    <input type="text" name="surname" required placeholder="Surname" />
+    <input type="text" name="name" required placeholder="Name" />
+    <input type="text" name="login" required placeholder="Login" />
+    <input type="text" name="password" required placeholder="Password" />
+
+    <div>
+        <label for="roleId">Role:</label>
+        <select name="roleId">
+            @foreach (Role role in Model.Roles)
+            {
+                <option value="@role.Id">@role.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="statusId">Status:</label>
+        <select name="statusId">
+            @foreach (Status status in Model.Statuses)
+            {
+                <option value="@status.Id">@status.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="departmentId">Department:</label>
+        <select name="departmentId">
+            @foreach (Department department in Model.Departments)
+            {
+                <option value="@department.Id">@department.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <input type="submit" value="Add" />
+    </div>
+</form>

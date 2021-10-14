@@ -26,6 +26,7 @@ namespace EmployeePerformanceApp.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Department>().HasOptional<UserModel>(u => u.UserId).WithOptionalPrincipal();
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CS_AS");
 
             Role adminRole = new Role { Id = 1, Name = "Admin" };
             Role chiefRole = new Role { Id = 2, Name = "Chief" };

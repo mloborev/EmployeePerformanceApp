@@ -22,7 +22,13 @@ namespace EmployeePerformanceApp.Controllers
             _userRepository = userRepository;
         }
 
-        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+        }
+
+        [Authorize]
         public async Task<IActionResult> RedirectUser()
         {
             int userId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
@@ -72,7 +78,7 @@ namespace EmployeePerformanceApp.Controllers
                 if (user != null)
                 {
                     await Authenticate(user);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("RedirectUser", "Account");
                 }
                 else
                     ModelState.AddModelError("", "Wrong login or password");
