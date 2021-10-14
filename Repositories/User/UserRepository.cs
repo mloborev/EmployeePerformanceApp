@@ -34,14 +34,24 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<User> GetUserById(int id)
         {
-            User user = await db.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            User user = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(x => x.Id == id).FirstOrDefaultAsync();
             return user;
         }
 
         public async Task<User> GetUserByLoginPassword(string userLogin, string userPassword)
         {
-            User user = await db.Users.Include(u => u.Role).Where(u => u.Login == userLogin && u.Password == userPassword).FirstOrDefaultAsync();
-            return user;
+            User user = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(u => u.Login == userLogin && u.Password == userPassword).FirstOrDefaultAsync();
+
+            
+
+            if (user != null && String.Equals(user.Login, userLogin) && String.Equals(user.Password, userPassword))
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

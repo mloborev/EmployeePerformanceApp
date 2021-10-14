@@ -14,6 +14,9 @@ namespace EmployeePerformanceApp.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Selection> Selections { get; set; }
+        public DbSet<Parameter> Parameters { get; set; }
+        public DbSet<Mark> Marks { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

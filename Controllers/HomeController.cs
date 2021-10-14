@@ -20,7 +20,6 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IUserRepository _userRepository;
         public HomeController(IUserRepository userRepository)
         {
-            //var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             _userRepository = userRepository;
         }
 
@@ -31,11 +30,10 @@ namespace EmployeePerformanceApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             int userId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
-            //int userId = User.FindFirst(ClaimTypes.NameIdentifier).Value
             User user = await _userRepository.GetUserById(userId);
             ViewBag.YourName = user.Name;
 

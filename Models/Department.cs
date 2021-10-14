@@ -12,10 +12,12 @@ namespace EmployeePerformanceApp.Models
         //public int? UserId { get; set; }
         public bool ShowPreviousMarks { get; set; }
 
+        public List<Selection> Selections { get; set; }
         public List<User> Users { get; set; }
         public Department()
         {
             Users = new List<User>();
+            Selections = new List<Selection>();
         }
     }
 }

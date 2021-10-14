@@ -23,14 +23,34 @@ namespace EmployeePerformanceApp.Controllers
         }
 
         [Authorize(Roles = "admin, user")]
-        public IActionResult RedirectUser()
+        public async Task<IActionResult> RedirectUser()
         {
-            //todo Достучаться до роли
+            int userId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
+            User user = await _userRepository.GetUserById(userId);
 
-            if (User.Identity.Name == "admin")
-                return RedirectToAction("Index", "Admin");
-            else
-                return RedirectToAction("MyWorkplace", "Home");
+            switch(user.RoleId)
+            {
+                case 1:
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                case 2:
+                    {
+                        return RedirectToAction("Index", "Chief");
+                    }
+                case 3:
+                    {
+                        return RedirectToAction("Index", "Lead");
+                    }
+                case 4:
+                    {
+                        return RedirectToAction("Index", "Employee");
+                    }
+                default:
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+            }
         }
 
         [HttpGet]
@@ -55,7 +75,11 @@ namespace EmployeePerformanceApp.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Wrong login or password");
+            }
+            else
+            {
+                ModelState.AddModelError("", "You need to fill both labels");
             }
             return View(model);
         }

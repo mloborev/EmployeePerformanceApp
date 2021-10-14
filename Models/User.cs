@@ -19,5 +19,11 @@ namespace EmployeePerformanceApp.Models
         public Role Role { get; set; }
         public Status Status { get; set; }
         public Department Department { get; set; }
+
+        public List<Mark> Marks { get; set; }
+        public User()
+        {
+            Marks = new List<Mark>();
+        }
     }
 }

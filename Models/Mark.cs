@@ -15,5 +15,8 @@ namespace EmployeePerformanceApp.Models
         public int AssessorId { get; set; }
         public DateTime AssesmentDate { get; set; }
         public bool IsActual { get; set; }
+
+        public User User { get; set; }
+        public Parameter Parameter { get; set; }
     }
 }

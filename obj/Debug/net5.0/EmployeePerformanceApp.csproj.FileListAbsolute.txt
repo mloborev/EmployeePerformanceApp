@@ -69,3 +69,4 @@ C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\De
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\EmployeePerformanceApp.pdb
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\EmployeePerformanceApp.genruntimeconfig.cache
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
