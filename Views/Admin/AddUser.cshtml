@@ -4,6 +4,42 @@
 
 <a asp-action="Index">Home</a>
 
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Surname</td>
+        <td>Name</td>
+        <td>Login</td>
+        <td>Password</td>
+        <td>Role</td>
+        <td>Status</td>
+        <td>Department</td>
+    </tr>
+    @foreach (User user in Model.Users)
+    {
+        if (user.Department.Name == "Admin")
+            continue;
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Surname</td>
+            <td>@user.Name</td>
+            <td>@user.Login</td>
+            <td>@user.Password</td>
+            <td>@user.Role.Name</td>
+            <td>@user.Status.Name</td>
+            <td>@user.Department.Name</td>
+        </tr>
+    }
+</table>
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"].Errors.Count > 0)
+{
+    <div class="alert">
+       <strong>Error!</strong>
+       <p>@ViewData.ModelState["Error"].Errors.First().ErrorMessage</p>
+    </div>
+}
+
 <form method="post" asp-action="AddUser">
 
     <input type="text" name="surname" required placeholder="Surname" />
@@ -16,6 +52,8 @@
         <select name="roleId">
             @foreach (Role role in Model.Roles)
             {
+                if (role.Name == "Admin")
+                    continue;
                 <option value="@role.Id">@role.Name</option>
             }
         </select>
@@ -36,6 +74,8 @@
         <select name="departmentId">
             @foreach (Department department in Model.Departments)
             {
+                if (department.Name == "Admin")
+                    continue;
                 <option value="@department.Id">@department.Name</option>
             }
         </select>

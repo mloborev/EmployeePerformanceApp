@@ -1,6 +1,7 @@
 ﻿using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,7 @@ namespace EmployeePerformanceApp.Controllers
 {
     public class AddUserViewModel
     {
+        public IEnumerable<User> Users { get; set; }
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<Status> Statuses { get; set; }
         public IEnumerable<Department> Departments { get; set; }
@@ -34,24 +36,40 @@ namespace EmployeePerformanceApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> AddUser()
         {
-            /*var roles = await db.Roles.ToListAsync();
-            var statuses = await db.Statuses.ToListAsync();
-            var departments = await db.Departments.ToListAsync();*/
             AddUserViewModel mymodel = new AddUserViewModel();
+            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
             mymodel.Roles = await db.Roles.ToListAsync();
             mymodel.Statuses = await db.Statuses.ToListAsync();
             mymodel.Departments = await db.Departments.ToListAsync();
             return View(mymodel);
         }
 
-        /*[HttpPost]
-        public IActionResult AddUser()
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AddUser(string surname, string name, string login, string password, int roleId, int statusId, int departmentId)
         {
-            
-            return View();
-        }*/
+            User check = await db.Users.Where(x => x.Login == login).FirstOrDefaultAsync();
+            if (check == null)
+            {
+                User user = new User { Surname = surname, Name = name, Login = login, Password = password, RoleId = roleId, StatusId = statusId, DepartmentId = departmentId };
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "User already exists");
+            }
+
+            AddUserViewModel mymodel = new AddUserViewModel();
+            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
+            mymodel.Roles = await db.Roles.ToListAsync();
+            mymodel.Statuses = await db.Statuses.ToListAsync();
+            mymodel.Departments = await db.Departments.ToListAsync();
+            return View(mymodel);
+        }
     }
 }

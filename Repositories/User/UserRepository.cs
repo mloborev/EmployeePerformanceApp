@@ -48,16 +48,6 @@ namespace EmployeePerformanceApp.Repositories
                 .FirstOrDefaultAsync();
 
             return user;
-            /*if (user != null && String.Equals(user.Login, userLogin) && String.Equals(user.Password, userPassword))
-            {
-                return user;
-            }
-            else
-            {
-                return null;
-            }*/
-
-           // return user != null && String.Equals(user.Login, userLogin) && String.Equals(user.Password, userPassword)
         }
     }
 }
