@@ -1,5 +1,6 @@
 ﻿using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Models;
+using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +13,6 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Controllers
 {
-    public class AddUserViewModel
-    {
-        public IEnumerable<User> Users { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
-        public IEnumerable<Status> Statuses { get; set; }
-        public IEnumerable<Department> Departments { get; set; }
-    }
-
     public class AdminController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -41,7 +34,7 @@ namespace EmployeePerformanceApp.Controllers
         public async Task<IActionResult> AddUser()
         {
             AddUserViewModel mymodel = new AddUserViewModel();
-            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
+            mymodel.Users = await _userRepository.GetAllData();
             mymodel.Roles = await db.Roles.ToListAsync();
             mymodel.Statuses = await db.Statuses.ToListAsync();
             mymodel.Departments = await db.Departments.ToListAsync();
@@ -63,6 +56,40 @@ namespace EmployeePerformanceApp.Controllers
             {
                 ModelState.AddModelError("Error", "User already exists");
             }
+
+            AddUserViewModel mymodel = new AddUserViewModel();
+            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
+            mymodel.Roles = await db.Roles.ToListAsync();
+            mymodel.Statuses = await db.Statuses.ToListAsync();
+            mymodel.Departments = await db.Departments.ToListAsync();
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser()
+        {
+            AddUserViewModel mymodel = new AddUserViewModel();
+            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Roles = await db.Roles.ToListAsync();
+            mymodel.Statuses = await db.Statuses.ToListAsync();
+            mymodel.Departments = await db.Departments.ToListAsync();
+
+            return View(mymodel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUserAction(int id)
+        {
+            await _userRepository.DeleteUserFromDB(id);
+            return RedirectToAction("DeleteUser", "Admin");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            await _userRepository.DeleteUserFromDB(id);
 
             AddUserViewModel mymodel = new AddUserViewModel();
             mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();

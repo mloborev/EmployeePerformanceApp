@@ -1,0 +1,51 @@
+﻿
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Surname</td>
+        <td>Name</td>
+        <td>Login</td>
+        <td>Password</td>
+        <td>Role</td>
+        <td>Status</td>
+        <td>Department</td>
+        <td>DeleteUser</td>
+    </tr>
+    @foreach (User user in Model.Users)
+    {
+        if (user.Department.Name == "Admin")
+            continue;
+<tr>
+    <td>@user.Id</td>
+    <td>@user.Surname</td>
+    <td>@user.Name</td>
+    <td>@user.Login</td>
+    <td>@user.Password</td>
+    <td>@user.Role.Name</td>
+    <td>@user.Status.Name</td>
+    <td>@user.Department.Name</td>
+    <td><a asp-controller="Admin" asp-action="DeleteUserAction" asp-route-id="@user.Id">Delete</a></td>
+    @*<a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>*@
+</tr>
+    }
+</table>
+
+
+@*<div>
+    <label for="userId">Find by Id:</label>
+    <select name="userId">
+        @foreach (User user in Model.Users)
+        {
+            if (user.Name == "Admin")
+                continue;
+            <option value="@user.Id">@user.Id, @user.Surname @user.Name</option>
+        }
+    </select>
+
+    <div>
+        <input type="submit" value="Delete" />
+    </div>
+</div>*@

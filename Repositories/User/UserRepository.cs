@@ -29,7 +29,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<List<User>> GetAllData()
         {
-            return await db.Users.ToListAsync();
+            return await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
         }
 
         public async Task<User> GetUserById(int id)
@@ -48,6 +48,13 @@ namespace EmployeePerformanceApp.Repositories
                 .FirstOrDefaultAsync();
 
             return user;
+        }
+
+        public async Task DeleteUserFromDB(int id)
+        {
+            User user = await GetUserById(id);
+            db.Remove(user);
+            await db.SaveChangesAsync();
         }
     }
 }
