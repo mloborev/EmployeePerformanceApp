@@ -17,14 +17,22 @@ namespace EmployeePerformanceApp.Repositories
             db = context;
         }
 
-        public Task AddUser()
+        public async Task AddUser(User user)
         {
-            throw new NotImplementedException();
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
         }
 
-        public Task DeleteUser()
+        public async Task DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            User user = await GetUserById(id);
+            db.Remove(user);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckIsUserExistByLogin(string login)
+        {
+            return await db.Users.AnyAsync(x => x.Login == login);
         }
 
         public async Task<List<User>> GetAllData()
@@ -48,13 +56,6 @@ namespace EmployeePerformanceApp.Repositories
                 .FirstOrDefaultAsync();
 
             return user;
-        }
-
-        public async Task DeleteUserFromDB(int id)
-        {
-            User user = await GetUserById(id);
-            db.Remove(user);
-            await db.SaveChangesAsync();
         }
     }
 }

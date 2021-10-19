@@ -11,7 +11,8 @@ namespace EmployeePerformanceApp.Repositories
         Task<User> GetUserById(int id);
         Task<User> GetUserByLoginPassword(string userLogin, string userPassword);
         Task<List<User>> GetAllData();
-        Task AddUser();
-        Task DeleteUserFromDB(int id);
+        Task AddUser(User user);
+        Task DeleteUser(int id);
+        Task<bool> CheckIsUserExistByLogin(string login);
     }
 }

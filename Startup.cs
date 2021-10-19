@@ -1,5 +1,6 @@
 using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Repositories;
+using EmployeePerformanceApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,11 @@ namespace EmployeePerformanceApp
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+            services.AddScoped<IUserService, UserService>();
 
             services.AddControllersWithViews();
         }

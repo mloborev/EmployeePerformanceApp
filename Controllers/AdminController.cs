@@ -2,6 +2,7 @@
 using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repositories;
+using EmployeePerformanceApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,19 @@ namespace EmployeePerformanceApp.Controllers
     public class AdminController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private ApplicationContext db;
-        public AdminController(IUserRepository userRepository, ApplicationContext context)
+        private readonly IRoleRepository _roleRepository;
+        private readonly IStatusRepository _statusRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+
+        private readonly IUserService _userService;
+        public AdminController(IUserRepository userRepository, IRoleRepository roleRepository, IStatusRepository statusRepository, IDepartmentRepository departmentRepository, IUserService userService)
         {
-            db = context;
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
+            _statusRepository = statusRepository;
+            _departmentRepository = departmentRepository;
+
+            _userService = userService;
         }
 
         [HttpGet]
@@ -35,9 +44,9 @@ namespace EmployeePerformanceApp.Controllers
         {
             AddUserViewModel mymodel = new AddUserViewModel();
             mymodel.Users = await _userRepository.GetAllData();
-            mymodel.Roles = await db.Roles.ToListAsync();
-            mymodel.Statuses = await db.Statuses.ToListAsync();
-            mymodel.Departments = await db.Departments.ToListAsync();
+            mymodel.Roles = await _roleRepository.GetAllData();
+            mymodel.Statuses = await _statusRepository.GetAllData();
+            mymodel.Departments = await _departmentRepository.GetAllData();
             return View(mymodel);
         }
 
@@ -45,12 +54,9 @@ namespace EmployeePerformanceApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(string surname, string name, string login, string password, int roleId, int statusId, int departmentId)
         {
-            User check = await db.Users.Where(x => x.Login == login).FirstOrDefaultAsync();
-            if (check == null)
+            if (!await _userRepository.CheckIsUserExistByLogin(login))
             {
-                User user = new User { Surname = surname, Name = name, Login = login, Password = password, RoleId = roleId, StatusId = statusId, DepartmentId = departmentId };
-                db.Users.Add(user);
-                await db.SaveChangesAsync();
+                await _userService.AddUser(surname, name, login, password, roleId, statusId, departmentId);
             }
             else
             {
@@ -58,10 +64,10 @@ namespace EmployeePerformanceApp.Controllers
             }
 
             AddUserViewModel mymodel = new AddUserViewModel();
-            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
-            mymodel.Roles = await db.Roles.ToListAsync();
-            mymodel.Statuses = await db.Statuses.ToListAsync();
-            mymodel.Departments = await db.Departments.ToListAsync();
+            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Roles = await _roleRepository.GetAllData();
+            mymodel.Statuses = await _statusRepository.GetAllData();
+            mymodel.Departments = await _departmentRepository.GetAllData();
             return View(mymodel);
         }
 
@@ -71,9 +77,9 @@ namespace EmployeePerformanceApp.Controllers
         {
             AddUserViewModel mymodel = new AddUserViewModel();
             mymodel.Users = await _userRepository.GetAllData();
-            mymodel.Roles = await db.Roles.ToListAsync();
-            mymodel.Statuses = await db.Statuses.ToListAsync();
-            mymodel.Departments = await db.Departments.ToListAsync();
+            mymodel.Roles = await _roleRepository.GetAllData();
+            mymodel.Statuses = await _statusRepository.GetAllData();
+            mymodel.Departments = await _departmentRepository.GetAllData();
 
             return View(mymodel);
         }
@@ -81,7 +87,7 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUserAction(int id)
         {
-            await _userRepository.DeleteUserFromDB(id);
+            await _userRepository.DeleteUser(id);
             return RedirectToAction("DeleteUser", "Admin");
         }
 
@@ -89,13 +95,13 @@ namespace EmployeePerformanceApp.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userRepository.DeleteUserFromDB(id);
+            await _userRepository.DeleteUser(id);
 
             AddUserViewModel mymodel = new AddUserViewModel();
-            mymodel.Users = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
-            mymodel.Roles = await db.Roles.ToListAsync();
-            mymodel.Statuses = await db.Statuses.ToListAsync();
-            mymodel.Departments = await db.Departments.ToListAsync();
+            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Roles = await _roleRepository.GetAllData();
+            mymodel.Statuses = await _statusRepository.GetAllData();
+            mymodel.Departments = await _departmentRepository.GetAllData();
             return View(mymodel);
         }
     }
