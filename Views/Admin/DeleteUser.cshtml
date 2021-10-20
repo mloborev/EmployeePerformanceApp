@@ -18,34 +18,95 @@
     {
         if (user.Department.Name == "Admin")
             continue;
-<tr>
-    <td>@user.Id</td>
-    <td>@user.Surname</td>
-    <td>@user.Name</td>
-    <td>@user.Login</td>
-    <td>@user.Password</td>
-    <td>@user.Role.Name</td>
-    <td>@user.Status.Name</td>
-    <td>@user.Department.Name</td>
-    <td><a asp-controller="Admin" asp-action="DeleteUserAction" asp-route-id="@user.Id">Delete</a></td>
-    @*<a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>*@
-</tr>
+        if (Model.LastName != null && !user.Surname.Contains(Model.LastName.Trim()) ||
+            Model.FirstName != null && !user.Name.Contains(Model.FirstName.Trim()) ||
+            Model.DepartmentName != null && !user.Department.Name.Contains(Model.DepartmentName.Trim()) ||
+            Model.StatusName != null && !user.Status.Name.Contains(Model.StatusName.Trim()) ||
+            Model.RoleName != null && !user.Role.Name.Contains(Model.RoleName.Trim()))
+        {
+            continue;
+        }
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Surname</td>
+            <td>@user.Name</td>
+            <td>@user.Login</td>
+            <td>@user.Password</td>
+            <td>@user.Role.Name</td>
+            <td>@user.Status.Name</td>
+            <td>@user.Department.Name</td>
+            <td><a asp-controller="Admin" asp-action="DeleteUserAction" asp-route-id="@user.Id">Delete</a></td>
+        </tr>
     }
 </table>
 
-
-@*<div>
-    <label for="userId">Find by Id:</label>
-    <select name="userId">
+@*<table class="table">
+        <tr>
+            <td>LastName</td>
+            <td>FirstName</td>
+            <td>Login</td>
+            <td>Password</td>
+            <td>Role</td>
+            <td>Status</td>
+            <td>Department</td>
+            <td>ID</td>
+        </tr>
         @foreach (User user in Model.Users)
         {
-            if (user.Name == "Admin")
+            if (user.Department.DepartmentName == "Admins")
+            {
                 continue;
-            <option value="@user.Id">@user.Id, @user.Surname @user.Name</option>
-        }
-    </select>
+            }
+            if (Model.LastName != null && !user.LastName.Contains(Model.LastName.Trim()) ||
+                Model.FirstName != null && !user.FirstName.Contains(Model.FirstName.Trim()) ||
+                Model.DepartmentName != null && !user.Department.DepartmentName.Contains(Model.DepartmentName.Trim()) ||
+                Model.StatusName != null && !user.Status.StatusName.Contains(Model.StatusName.Trim()) ||
+                Model.RoleName != null && !user.Role.RoleName.Contains(Model.RoleName.Trim()))
+            {
+                continue;
+            }
 
-    <div>
-        <input type="submit" value="Delete" />
+            <tr>
+                <td>@user.LastName</td>
+                <td>@user.FirstName</td>
+                <td>@user.Login</td>
+                <td>@user.Password</td>
+                <td>@user.Role.RoleName</td>
+                <td>@user.Status.StatusName</td>
+                <td>@user.Department.DepartmentName</td>
+                <td>@user.ID</td>
+            </tr>
+        }
+    </table>*@
+
+<form method="post" asp-action="DeleteUser">
+    <div class="text-center">
+
+        <input type="text" name="lastName" placeholder="Surname" />
+        <input type="text" name="firstName" placeholder="Name" />
+        <input type="text" name="department" placeholder="Department" />
+        <input type="text" name="status" placeholder="Status" />
+        <input type="text" name="role" placeholder="Role" />
+
+        <div>
+            <input type="submit" value="Search" class="btn-info" />
+        </div>
     </div>
-</div>*@
+</form>
+
+
+@*<div>
+        <label for="userId">Find by Id:</label>
+        <select name="userId">
+            @foreach (User user in Model.Users)
+            {
+                if (user.Name == "Admin")
+                    continue;
+                <option value="@user.Id">@user.Id, @user.Surname @user.Name</option>
+            }
+        </select>
+
+        <div>
+            <input type="submit" value="Delete" />
+        </div>
+    </div>*@

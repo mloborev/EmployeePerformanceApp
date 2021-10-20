@@ -1,0 +1,21 @@
+﻿@model IEnumerable<EmployeePerformanceApp.Models.Parameter>
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Coefficient</td>
+        <td>Delete Parameter</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Coefficient</td>
+            <td><a asp-controller="Admin" asp-action="DeleteParameterAction" asp-route-id="@item.Id">Delete</a></td>
+        </tr>
+    }
+</table>

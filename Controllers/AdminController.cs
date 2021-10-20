@@ -1,6 +1,5 @@
 ﻿using EmployeePerformanceApp.Context;
 using EmployeePerformanceApp.Models;
-using EmployeePerformanceApp.Models.ModelsForViews;
 using EmployeePerformanceApp.Repositories;
 using EmployeePerformanceApp.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -20,22 +19,57 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IRoleRepository _roleRepository;
         private readonly IStatusRepository _statusRepository;
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IParameterRepository _parameterRepository;
 
         private readonly IUserService _userService;
-        public AdminController(IUserRepository userRepository, IRoleRepository roleRepository, IStatusRepository statusRepository, IDepartmentRepository departmentRepository, IUserService userService)
+        private readonly IParameterService _parameterService;
+
+        public AdminController(IUserRepository userRepository, IRoleRepository roleRepository, IStatusRepository statusRepository, IDepartmentRepository departmentRepository, IParameterRepository parameterRepository, IUserService userService, IParameterService parameterService)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _statusRepository = statusRepository;
             _departmentRepository = departmentRepository;
+            _parameterRepository = parameterRepository;
 
             _userService = userService;
+            _parameterService = parameterService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AddParameter()
+        {
+            return View(await _parameterRepository.GetAllData());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AddParameter(string name)
+        {
+            await _parameterService.AddParameter(name);
+
+            return View(await _parameterRepository.GetAllData());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteParameter()
+        {
+            return View(await _parameterRepository.GetAllData());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteParameterAction(int id)
+        {
+            await _parameterRepository.DeleteParameter(id);
+            return RedirectToAction("DeleteParameter", "Admin");
         }
 
         [Authorize(Roles = "Admin")]
@@ -75,7 +109,7 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUser()
         {
-            AddUserViewModel mymodel = new AddUserViewModel();
+            DeleteUserViewModel mymodel = new DeleteUserViewModel();
             mymodel.Users = await _userRepository.GetAllData();
             mymodel.Roles = await _roleRepository.GetAllData();
             mymodel.Statuses = await _statusRepository.GetAllData();
@@ -93,11 +127,14 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string lastName, string firstName, string department, string status, string role)
         {
-            await _userRepository.DeleteUser(id);
-
-            AddUserViewModel mymodel = new AddUserViewModel();
+            DeleteUserViewModel mymodel = new DeleteUserViewModel();
+            mymodel.LastName = lastName;
+            mymodel.FirstName = firstName;
+            mymodel.DepartmentName = department;
+            mymodel.StatusName = status;
+            mymodel.RoleName = role;
             mymodel.Users = await _userRepository.GetAllData();
             mymodel.Roles = await _roleRepository.GetAllData();
             mymodel.Statuses = await _statusRepository.GetAllData();

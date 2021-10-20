@@ -12,11 +12,12 @@ namespace EmployeePerformanceApp.Models
         public double Coefficient { get; set; }
 
 
-        public Selection Selection { get; set; }
+        public List<Selection> Selections { get; set; }
         public List<Mark> Marks { get; set; }
         public Parameter()
         {
             Marks = new List<Mark>();
+            Selections = new List<Selection>();
         }
     }
 }

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<EmployeePerformanceApp.Models.Parameter>
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.Id</td><td>@item.Name</td><td>@item.Coefficient</td></tr>
+    }
+</table>
+
+<form method="post" asp-action="AddParameter">
+
+    <input type="text" name="name" required placeholder="Name" />
+
+    <div>
+        <input type="submit" value="Add" />
+    </div>
+</form>
