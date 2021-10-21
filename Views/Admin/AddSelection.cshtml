@@ -1,0 +1,31 @@
+﻿
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr><td>Id</td><td>Department</td><td>Name</td></tr>
+    @foreach (var item in Model.Selections)
+    {
+        <tr><td>@item.Id</td><td>@item.Department.Name</td><td>@item.Name</td></tr>
+    }
+</table>
+
+<form method="post" asp-action="AddSelection">
+
+    <div>
+        <label for="departmentId">Department:</label>
+        <select name="departmentId">
+            @foreach (Department department in Model.Departments)
+            {
+                if (department.Name == "Admin")
+                    continue;
+                <option value="@department.Id">@department.Name</option>
+            }
+        </select>
+    </div>
+
+    <input type="text" name="selectionName" required placeholder="Name" />
+
+    <div>
+        <input type="submit" value="Add" />
+    </div>
+</form>

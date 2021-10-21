@@ -43,9 +43,11 @@ namespace EmployeePerformanceApp
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
+            services.AddScoped<ISelectionRepository, SelectionRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IParameterService, ParameterService>();
+            services.AddScoped<ISelectionService, SelectionService>();
 
             services.AddControllersWithViews();
         }

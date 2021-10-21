@@ -20,26 +20,52 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IStatusRepository _statusRepository;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IParameterRepository _parameterRepository;
+        private readonly ISelectionRepository _selectionRepository;
 
         private readonly IUserService _userService;
         private readonly IParameterService _parameterService;
+        private readonly ISelectionService _selectionService;
 
-        public AdminController(IUserRepository userRepository, IRoleRepository roleRepository, IStatusRepository statusRepository, IDepartmentRepository departmentRepository, IParameterRepository parameterRepository, IUserService userService, IParameterService parameterService)
+        public AdminController(IUserRepository userRepository, IRoleRepository roleRepository, IStatusRepository statusRepository, IDepartmentRepository departmentRepository, IParameterRepository parameterRepository, ISelectionRepository selectionRepository, IUserService userService, IParameterService parameterService, ISelectionService selectionService)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _statusRepository = statusRepository;
             _departmentRepository = departmentRepository;
             _parameterRepository = parameterRepository;
+            _selectionRepository = selectionRepository;
 
             _userService = userService;
             _parameterService = parameterService;
+            _selectionService = selectionService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AddSelection()
+        {
+            AddSelectionViewModel mymodel = new AddSelectionViewModel();
+            mymodel.Departments = await _departmentRepository.GetAllData();
+            mymodel.Selections = await _selectionRepository.GetAllData();
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> AddSelection(int departmentId, string selectionName)
+        {
+            await _selectionService.AddSelection(departmentId, selectionName);
+
+            AddSelectionViewModel mymodel = new AddSelectionViewModel();
+            mymodel.Departments = await _departmentRepository.GetAllData();
+            mymodel.Selections = await _selectionRepository.GetAllData();
+            return View(mymodel);
         }
 
         [Authorize(Roles = "Admin")]
