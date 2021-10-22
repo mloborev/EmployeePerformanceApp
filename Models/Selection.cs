@@ -13,10 +13,10 @@ namespace EmployeePerformanceApp.Models
 
         
         public Department Department { get; set; }
-        public List<Parameter> Parameters { get; set; }
-        public Selection()
+        public List<Parameter> Parameters { get; set; } = new();
+        /*public Selection()
         {
             Parameters = new List<Parameter>();
-        }
+        }*/
     }
 }

@@ -9,5 +9,6 @@ namespace EmployeePerformanceApp.Models
     {
         public IEnumerable<Selection> Selections { get; set; }
         public IEnumerable<Department> Departments { get; set; }
+        public IEnumerable<Parameter> Parameters { get; set; }
     }
 }

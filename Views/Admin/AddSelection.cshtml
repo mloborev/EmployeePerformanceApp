@@ -1,11 +1,27 @@
-﻿
+﻿@model AddSelectionViewModel
+
 <a asp-action="Index">Home</a>
 
 <table class="table">
-    <tr><td>Id</td><td>Department</td><td>Name</td></tr>
+    <tr>
+        <td>Id</td>
+        <td>Department</td>
+        <td>Name</td>
+        <td>Parameters</td>
+    </tr>
     @foreach (var item in Model.Selections)
     {
-        <tr><td>@item.Id</td><td>@item.Department.Name</td><td>@item.Name</td></tr>
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Department.Name</td>
+            <td>@item.Name</td>
+            <td> 
+                @foreach(Parameter lala in item.Parameters)
+                {
+                    <p>@lala.Name</p>
+                }
+            </td>
+        </tr>
     }
 </table>
 
@@ -21,6 +37,19 @@
                 <option value="@department.Id">@department.Name</option>
             }
         </select>
+    </div>
+
+    <div>
+        <p>Check parameters for this selection:</p>
+
+        <div>
+            @foreach (Parameter parameter in Model.Parameters)
+            {
+                <label>
+                    <input type="checkbox" name="myarray" id="myarray" value="@parameter.Id" /> @parameter.Name
+                </label>
+            }
+        </div>
     </div>
 
     <input type="text" name="selectionName" required placeholder="Name" />

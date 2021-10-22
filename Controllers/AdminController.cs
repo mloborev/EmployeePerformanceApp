@@ -53,18 +53,20 @@ namespace EmployeePerformanceApp.Controllers
             AddSelectionViewModel mymodel = new AddSelectionViewModel();
             mymodel.Departments = await _departmentRepository.GetAllData();
             mymodel.Selections = await _selectionRepository.GetAllData();
+            mymodel.Parameters = await _parameterRepository.GetAllData();
             return View(mymodel);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AddSelection(int departmentId, string selectionName)
+        public async Task<IActionResult> AddSelection(int departmentId, string selectionName, int[] myarray)
         {
-            await _selectionService.AddSelection(departmentId, selectionName);
+            await _selectionService.AddSelection(departmentId, selectionName, myarray);
 
             AddSelectionViewModel mymodel = new AddSelectionViewModel();
             mymodel.Departments = await _departmentRepository.GetAllData();
             mymodel.Selections = await _selectionRepository.GetAllData();
+            mymodel.Parameters = await _parameterRepository.GetAllData();
             return View(mymodel);
         }
 

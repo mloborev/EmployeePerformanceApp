@@ -9,6 +9,7 @@ namespace EmployeePerformanceApp.Repositories
     public interface ISelectionRepository
     {
         Task<List<Selection>> GetAllData();
+        Task<List<Selection>> GetSelectionsByIds(int[] ids);
         Task<Selection> GetSelectionById(int id);
         Task AddSelection(Selection selection);
         Task DeleteSelection(int id);

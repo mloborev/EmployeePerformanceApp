@@ -46,7 +46,9 @@ namespace EmployeePerformanceApp.Context
             User leadUser = new User { Id = 5, Name = "Lead", Surname = "Leadov", Login = "lead", Password = "123", RoleId = leadRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id};
             User chiefUser = new User { Id = 6, Name = "Chief", Surname = "Chiefov", Login = "chief", Password = "123", RoleId = chiefRole.Id, StatusId = workingStatus.Id , DepartmentId = programmersDepartment.Id};
 
-           
+            modelBuilder.Entity<Selection>(x => {
+                x.Navigation(s => s.Parameters).AutoInclude();
+            });
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, chiefRole, leadRole, employeeRole });
             modelBuilder.Entity<Status>().HasData(new Status[] { workingStatus, firedStatus });
