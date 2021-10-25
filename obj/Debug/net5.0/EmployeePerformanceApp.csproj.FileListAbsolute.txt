@@ -78,3 +78,5 @@ C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\De
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\AddParameter.cshtml.g.cs
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\DeleteParameter.cshtml.g.cs
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\AddSelection.cshtml.g.cs
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Lead\AddMark.cshtml.g.cs
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Lead\AddMarkAction.cshtml.g.cs

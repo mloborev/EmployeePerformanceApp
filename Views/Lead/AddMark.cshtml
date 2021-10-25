@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EmployeePerformanceApp.Models.User>
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Surname</td>
+        <td>Name</td>
+        <td>Role</td>
+        <td>Status</td>
+        <td>Add Mark</td>
+    </tr>
+    @foreach (User user in Model)
+    {
+        if (user.RoleId != 4)
+            continue;
+    <tr>
+        <td>@user.Surname</td>
+        <td>@user.Name</td>
+        <td>@user.Role.Name</td>
+        <td>@user.Status.Name</td>
+        <td><a asp-controller="Lead" asp-action="AddMarkAction" asp-route-userId="@user.Id">Add Mark</a></td>
+    </tr>
+    }
+</table>

@@ -38,16 +38,20 @@ namespace EmployeePerformanceApp
                 options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IParameterRepository, ParameterRepository>();
             services.AddScoped<ISelectionRepository, SelectionRepository>();
+            services.AddScoped<IMarkRepository, MarkRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IParameterService, ParameterService>();
             services.AddScoped<ISelectionService, SelectionService>();
+            services.AddScoped<IMarkService, MarkService>();
 
             services.AddControllersWithViews();
         }

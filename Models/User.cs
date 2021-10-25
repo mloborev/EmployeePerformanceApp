@@ -15,7 +15,7 @@ namespace EmployeePerformanceApp.Models
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int StatusId { get; set; }
-        public int? DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
         public Role Role { get; set; }
         public Status Status { get; set; }
