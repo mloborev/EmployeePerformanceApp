@@ -54,7 +54,7 @@ namespace EmployeePerformanceApp.Controllers
             User currentUser = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
 
             AddMarkViewModel mymodel = new AddMarkViewModel();
-            mymodel.LeadDepartmentId = currentUser.DepartmentId;
+            mymodel.LeadDepartmentId = (int)currentUser.DepartmentId;
             mymodel.UserId = userId;
             mymodel.Users = await _userRepository.GetAllData();
             mymodel.Parameters = await _parameterRepository.GetAllData();

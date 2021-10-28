@@ -45,9 +45,12 @@
         <div>
             @foreach (Parameter parameter in Model.Parameters)
             {
-                <label>
+                if (parameter.IsInUse)
+                    continue;
+                <p>
                     <input type="checkbox" name="myarray" id="myarray" value="@parameter.Id" /> @parameter.Name
-                </label>
+                    @*<input type="number" step="0.01" name="mycoefficientarray" id="mycoefficientarray" placeholder="Coefficient" />*@
+                </p>
             }
         </div>
     </div>

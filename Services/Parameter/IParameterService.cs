@@ -8,7 +8,7 @@ namespace EmployeePerformanceApp.Services
 {
     public interface IParameterService
     {
-        Task AddParameter(string name);
+        Task AddParameter(string name, double coefficient);
         Task SetParametersInUse(List<Parameter> parameters);
     }
 }
