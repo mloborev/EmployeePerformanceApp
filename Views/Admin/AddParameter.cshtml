@@ -1,16 +1,28 @@
-﻿@model IEnumerable<EmployeePerformanceApp.Models.Parameter>
+﻿@model AddParameterViewModel
 
 <a asp-action="Index">Home</a>
 
 <table class="table">
     <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Parameters)
     {
         <tr><td>@item.Id</td><td>@item.Name</td><td>@item.Coefficient</td></tr>
     }
 </table>
 
 <form method="post" asp-action="AddParameter">
+
+    <div>
+        <label for="departmentId">Department:</label>
+        <select name="departmentId">
+            @foreach (Department department in Model.Departments)
+            {
+                if (department.Name == "Admin")
+                    continue;
+                <option value="@department.Id">@department.Name</option>
+            }
+        </select>
+    </div>
 
     <input type="text" name="name" required placeholder="Name" />
     <input type="number" step="0.1" name="coefficient" id="coefficient" placeholder="Coefficient" />

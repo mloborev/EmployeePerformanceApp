@@ -26,7 +26,7 @@ namespace EmployeePerformanceApp.Services
             List<Parameter> parametersArray = new List<Parameter>(await _parameterRepository.GetParametersByIds(arr));
 
             Selection selection = new Selection { DepartmentId = departmentId, Name = selectionName, Parameters = parametersArray};
-            await _parameterService.SetParametersInUse(parametersArray);
+            //await _parameterService.SetParametersInUse(parametersArray);
             await _selectionRepository.AddSelection(selection);
         }
     }

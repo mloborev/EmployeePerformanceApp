@@ -31,7 +31,7 @@ namespace EmployeePerformanceApp.Repositories
             return await db.Parameters.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task SetParametersInUse(List<Parameter> parameters)
+/*        public async Task SetParametersInUse(List<Parameter> parameters)
         {
             foreach (var item in parameters)
             {
@@ -39,7 +39,7 @@ namespace EmployeePerformanceApp.Repositories
             }
 
             await db.SaveChangesAsync();
-        }
+        }*/
 
         public async Task AddParameter(Parameter parameter)
         {
