@@ -83,8 +83,6 @@ namespace EmployeePerformanceApp.Controllers
         {
             await _parameterService.AddParameter(name);
 
-            
-
             return View(await _parameterRepository.GetAllData());
         }
 

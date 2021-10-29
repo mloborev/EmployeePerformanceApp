@@ -17,13 +17,8 @@ namespace EmployeePerformanceApp.Services
 
         public async Task AddParameter(string name)
         {
-            Parameter parameter = new Parameter {Name = name, IsInUse = false};
+            Parameter parameter = new Parameter {Name = name};
             await _parameterRepository.AddParameter(parameter);
-        }
-
-        public async Task SetParametersInUse(List<Parameter> parameters)
-        {
-            await _parameterRepository.SetParametersInUse(parameters);
         }
     }
 }
