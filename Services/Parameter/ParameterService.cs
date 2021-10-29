@@ -15,10 +15,16 @@ namespace EmployeePerformanceApp.Services
             _parameterRepository = parameterRepository;
         }
 
-        public async Task AddParameter(string name)
+
+        public async Task AddParameter(int departmentId, string name, double coefficient)
         {
-            Parameter parameter = new Parameter {Name = name};
+            Parameter parameter = new Parameter {Name = name, Coefficient = coefficient, DepartmentId = departmentId};
             await _parameterRepository.AddParameter(parameter);
         }
+
+        /*public async Task SetParametersInUse(List<Parameter> parameters)
+        {
+            await _parameterRepository.SetParametersInUse(parameters);
+        }*/
     }
 }

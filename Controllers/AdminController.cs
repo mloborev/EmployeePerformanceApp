@@ -74,16 +74,22 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddParameter()
         {
-            return View(await _parameterRepository.GetAllData());
+            AddParameterViewModel mymodel = new AddParameterViewModel();
+            mymodel.Departments = await _departmentRepository.GetAllData();
+            mymodel.Parameters = await _parameterRepository.GetAllData();
+            return View(mymodel);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AddParameter(string name)
+        public async Task<IActionResult> AddParameter(int departmentId, string name, double coefficient)
         {
-            await _parameterService.AddParameter(name);
+            await _parameterService.AddParameter(departmentId, name, coefficient);
 
-            return View(await _parameterRepository.GetAllData());
+            AddParameterViewModel mymodel = new AddParameterViewModel();
+            mymodel.Departments = await _departmentRepository.GetAllData();
+            mymodel.Parameters = await _parameterRepository.GetAllData();
+            return View(mymodel);
         }
 
         [Authorize(Roles = "Admin")]
