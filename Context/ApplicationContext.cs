@@ -47,10 +47,10 @@ namespace EmployeePerformanceApp.Context
             User leadUser = new User { Id = 5, Name = "Lead", Surname = "Leadov", Login = "lead", Password = "123", RoleId = leadRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id};
             User chiefUser = new User { Id = 6, Name = "Chief", Surname = "Chiefov", Login = "chief", Password = "123", RoleId = chiefRole.Id, StatusId = workingStatus.Id , DepartmentId = programmersDepartment.Id};
 
-/*            Parameter parameter1 = new Parameter { Id = 1, Name = "Responsibility level", Coefficient = 0 };
+            Parameter parameter1 = new Parameter { Id = 1, Name = "Responsibility level", Coefficient = 0 };
             Parameter parameter2 = new Parameter { Id = 2, Name = "Level of independence", Coefficient = 0 };
             Parameter parameter3 = new Parameter { Id = 3, Name = "Team communication", Coefficient = 0 };
-            Parameter parameter4 = new Parameter { Id = 4, Name = "Leadership skills", Coefficient = 0 };*/
+            Parameter parameter4 = new Parameter { Id = 4, Name = "Leadership skills", Coefficient = 0 };
 
             //modelBuilder.Entity<Mark>().HasOne(m => m.User).WithMany(m => m.Marks).OnDelete(DeleteBehavior.SetNull);
 
@@ -62,7 +62,7 @@ namespace EmployeePerformanceApp.Context
             modelBuilder.Entity<Status>().HasData(new Status[] { workingStatus, firedStatus });
             modelBuilder.Entity<Department>().HasData(new Department[] { adminDepartment, programmersDepartment, lawyersDepartment });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser, user1User, user2User, user3User, leadUser, chiefUser });
-            //modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, parameter3, parameter4 });
+            modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, parameter3, parameter4 });
             //modelBuilder.Entity<Workplace>().HasOne(x => x.Reservation).WithOne(x => x.Workplace);
 
             base.OnModelCreating(modelBuilder);
