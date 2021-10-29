@@ -35,8 +35,11 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMark()
         {
-            //User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            return View(await _userRepository.GetAllData());
+            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            AddMarkViewModel mymodel = new AddMarkViewModel();
+            mymodel.LeadDepartmentId = user.DepartmentId;
+            mymodel.Users = await _userRepository.GetAllData();
+            return View(mymodel);
         }
 
         /*[Authorize(Roles = "Lead")]

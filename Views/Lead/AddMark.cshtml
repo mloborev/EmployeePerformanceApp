@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeePerformanceApp.Models.User>
+﻿@model AddMarkViewModel
 
 <a asp-action="Index">Home</a>
 
@@ -10,9 +10,9 @@
         <td>Status</td>
         <td>Add Mark</td>
     </tr>
-    @foreach (User user in Model)
+    @foreach (User user in Model.Users)
     {
-        if (user.RoleId != 4)
+        if (user.RoleId != 4 || user.DepartmentId != Model.LeadDepartmentId)
             continue;
     <tr>
         <td>@user.Surname</td>

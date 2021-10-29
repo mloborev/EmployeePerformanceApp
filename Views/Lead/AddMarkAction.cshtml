@@ -11,6 +11,8 @@
         <select name="parameterId">
             @foreach (Parameter parameter in Model.Parameters)
             {
+                @if (parameter.DepartmentId != Model.LeadDepartmentId)
+                    continue;
                 <option value="@parameter.Id">@parameter.Name</option>
             }
         </select>
