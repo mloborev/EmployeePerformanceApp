@@ -13,12 +13,10 @@ namespace EmployeePerformanceApp.Models
 
         public List<Selection> Selections { get; set; }
         public List<User> Users { get; set; }
-        public List<Parameter> Parameters { get; set; }
         public Department()
         {
             Users = new List<User>();
             Selections = new List<Selection>();
-            Parameters = new List<Parameter>();
         }
     }
 }
