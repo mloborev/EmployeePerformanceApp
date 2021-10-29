@@ -79,9 +79,9 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AddParameter(string name, double coefficient)
+        public async Task<IActionResult> AddParameter(string name)
         {
-            await _parameterService.AddParameter(name, coefficient);
+            await _parameterService.AddParameter(name);
 
             
 

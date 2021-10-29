@@ -52,11 +52,9 @@ namespace EmployeePerformanceApp.Context
             Parameter parameter3 = new Parameter { Id = 3, Name = "Team communication", Coefficient = 0 };
             Parameter parameter4 = new Parameter { Id = 4, Name = "Leadership skills", Coefficient = 0 };
 
-            //modelBuilder.Entity<Mark>().HasOne(m => m.User).WithMany(m => m.Marks).OnDelete(DeleteBehavior.SetNull);
-
-            /*modelBuilder.Entity<Selection>(x => {
+            modelBuilder.Entity<Selection>(x => {
                 x.Navigation(s => s.Parameters).AutoInclude();
-            });*/
+            });
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, chiefRole, leadRole, employeeRole });
             modelBuilder.Entity<Status>().HasData(new Status[] { workingStatus, firedStatus });

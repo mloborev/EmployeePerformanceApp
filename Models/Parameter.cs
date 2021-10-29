@@ -10,10 +10,10 @@ namespace EmployeePerformanceApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public double Coefficient { get; set; }
-        public int? SelectionId { get; set; }
-        public bool IsInUse { get; set; }
+        public int SelectionId { get; set; }
+        public bool? IsInUse { get; set; }
 
-        public Selection Selection { get; set; }
+        public Selection Selections { get; set; }
 
         public List<Mark> Marks { get; set; }
         public Parameter()

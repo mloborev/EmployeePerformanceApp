@@ -11,14 +11,10 @@ namespace EmployeePerformanceApp.Services
     {
         private readonly ISelectionRepository _selectionRepository;
         private readonly IParameterRepository _parameterRepository;
-
-        private readonly IParameterService _parameterService;
-        public SelectionService(ISelectionRepository selectionRepository, IParameterRepository parameterRepository, IParameterService parameterService)
+        public SelectionService(ISelectionRepository selectionRepository, IParameterRepository parameterRepository)
         {
             _selectionRepository = selectionRepository;
             _parameterRepository = parameterRepository;
-
-            _parameterService = parameterService;
         }
 
         public async Task AddSelection(int departmentId, string selectionName, int[] arr)
@@ -26,7 +22,6 @@ namespace EmployeePerformanceApp.Services
             List<Parameter> parametersArray = new List<Parameter>(await _parameterRepository.GetParametersByIds(arr));
 
             Selection selection = new Selection { DepartmentId = departmentId, Name = selectionName, Parameters = parametersArray};
-            await _parameterService.SetParametersInUse(parametersArray);
             await _selectionRepository.AddSelection(selection);
         }
     }
