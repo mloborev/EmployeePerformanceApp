@@ -27,17 +27,7 @@
 
 <form method="post" asp-action="AddSelection">
 
-    <div>
-        <label for="departmentId">Department:</label>
-        <select name="departmentId">
-            @foreach (Department department in Model.Departments)
-            {
-                if (department.Name == "Admin")
-                    continue;
-                <option value="@department.Id">@department.Name</option>
-            }
-        </select>
-    </div>
+    <input type="hidden" value="@Model.DepartmentId" name="departmentId" />
 
     <div>
         <p>Check parameters for this selection:</p>
@@ -45,6 +35,8 @@
         <div>
             @foreach (Parameter parameter in Model.Parameters)
             {
+                if (parameter.DepartmentId != Model.DepartmentId)
+                    continue;
                 <label>
                     <input type="checkbox" name="myarray" id="myarray" value="@parameter.Id" /> @parameter.Name
                 </label>

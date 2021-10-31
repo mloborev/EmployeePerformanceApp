@@ -80,3 +80,4 @@ C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\De
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\ref\EmployeePerformanceApp.dll
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\EmployeePerformanceApp.pdb
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\EmployeePerformanceApp.genruntimeconfig.cache
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Admin\ChooseDepartment.cshtml.g.cs

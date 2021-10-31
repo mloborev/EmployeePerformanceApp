@@ -1,0 +1,21 @@
+﻿@model IEnumerable<EmployeePerformanceApp.Models.Department>
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Add Selection</td>
+    </tr>
+    @foreach (Department department in Model)
+    {
+        if (department.Name == "Admin")
+            continue;
+        <tr>
+            <td>@department.Id</td>
+            <td>@department.Name</td>
+            <td><a asp-controller="Admin" asp-action="AddSelection" asp-route-departmentId="@department.Id">Add Selection</a></td>
+        </tr>
+    }
+</table>

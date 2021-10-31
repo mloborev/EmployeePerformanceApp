@@ -48,12 +48,20 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> AddSelection()
+        public async Task<IActionResult> ChooseDepartment()
+        {
+            return View(await _departmentRepository.GetAllData());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AddSelection(int departmentId)
         {
             AddSelectionViewModel mymodel = new AddSelectionViewModel();
             mymodel.Departments = await _departmentRepository.GetAllData();
             mymodel.Selections = await _selectionRepository.GetAllData();
             mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.DepartmentId = departmentId;
             return View(mymodel);
         }
 
