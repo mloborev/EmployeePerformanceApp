@@ -1,0 +1,25 @@
+﻿@model AddMarkViewModel
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Surname</td>
+        <td>Name</td>
+        <td>Role</td>
+        <td>Status</td>
+        <td>Add Mark</td>
+    </tr>
+    @foreach (User user in Model.Users)
+    {
+        if (user.RoleId != 3 || user.DepartmentId != Model.LeadDepartmentId)
+            continue;
+        <tr>
+            <td>@user.Surname</td>
+            <td>@user.Name</td>
+            <td>@user.Role.Name</td>
+            <td>@user.Status.Name</td>
+            <td><a asp-controller="Chief" asp-action="AddMarkAction" asp-route-userId="@user.Id">Add Mark</a></td>
+        </tr>
+    }
+</table>
