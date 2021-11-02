@@ -31,7 +31,7 @@ namespace EmployeePerformanceApp.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Chief")]
+        [Authorize(Roles = "Lead")]
         [HttpGet]
         public async Task<IActionResult> AddMark()
         {
@@ -50,7 +50,7 @@ namespace EmployeePerformanceApp.Controllers
             return RedirectToAction("Index", "Chief");
         }*/
 
-        [Authorize(Roles = "Chief")]
+        [Authorize(Roles = "Lead")]
         [HttpGet]
         public async Task<IActionResult> AddMarkAction(int userId)
         {
@@ -64,12 +64,12 @@ namespace EmployeePerformanceApp.Controllers
             return View(mymodel);
         }
 
-        [Authorize(Roles = "Chief")]
+        [Authorize(Roles = "Lead")]
         [HttpPost]
         public async Task<IActionResult> AddMarkAction(int userId, int parameterId, int markValue, string markDescription)
         {
             await _markService.AddMark(userId, parameterId, markValue, markDescription);
-            return RedirectToAction("AddMark", "Chief");
+            return RedirectToAction("AddMark", "Lead");
         }
     }
 }

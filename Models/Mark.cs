@@ -13,8 +13,11 @@ namespace EmployeePerformanceApp.Models
         public string MarkDescription { get; set; }
         public int UserId { get; set; }
         public int AssessorId { get; set; }
+        public string AssessorSurname { get; set; }
+        public string AssessorName { get; set; }
         public DateTime AssesmentDate { get; set; }
         public bool IsActual { get; set; }
+
 
         public User User { get; set; }
         public Parameter Parameter { get; set; }

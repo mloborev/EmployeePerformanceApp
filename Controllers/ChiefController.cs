@@ -33,6 +33,49 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Chief")]
         [HttpGet]
+        public async Task<IActionResult> GetAllMarks()
+        {
+            List<Mark> marks = await _markRepository.GetAllData();
+            List<User> assessors = new List<User>();
+            foreach (var item in marks)
+            {
+                assessors.Add(await _userRepository.GetUserById(item.AssessorId));
+            }
+
+            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            GetAllMarksViewModel mymodel = new GetAllMarksViewModel();
+            mymodel.CurrentUserDepartmentId = user.DepartmentId;
+            mymodel.Assessors = assessors;
+            mymodel.Marks = marks;
+            mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.Users = await _userRepository.GetAllData();
+
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllActualMarks()
+        {
+            List<Mark> marks = await _markRepository.GetAllData();
+            List<User> assessors = new List<User>();
+            foreach(var item in marks)
+            {
+                assessors.Add(await _userRepository.GetUserById(item.AssessorId));
+            }
+
+            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            GetAllMarksViewModel mymodel = new GetAllMarksViewModel();
+            mymodel.CurrentUserDepartmentId = user.DepartmentId;
+            mymodel.Assessors = assessors;
+            mymodel.Marks = marks;
+            mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.Users = await _userRepository.GetAllData();
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
         public async Task<IActionResult> AddMark()
         {
             User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));

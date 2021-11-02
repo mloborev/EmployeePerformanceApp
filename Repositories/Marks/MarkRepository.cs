@@ -24,7 +24,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<List<Mark>> GetAllData()
         {
-            return await db.Marks.ToListAsync();
+            return await db.Marks.Include(x => x.User).Include(x => x.Parameter).ToListAsync();
         }
 
         public Task<Mark> GetMarkById(int id)
