@@ -28,7 +28,8 @@ namespace EmployeePerformanceApp.Services
 
 
             Mark mark = new Mark 
-            { ParameterId = parameterId, 
+            { 
+                ParameterId = parameterId, 
                 MarkValue = markValue, 
                 MarkDescription = markDescription, 
                 UserId = userId, 

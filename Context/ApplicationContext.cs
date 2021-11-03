@@ -41,12 +41,190 @@ namespace EmployeePerformanceApp.Context
             Department lawyersDepartment = new Department { Id = 3, Name = "Lawyers", ShowPreviousMarks = true };
             Department testersDepartment = new Department { Id = 4, Name = "Testers", ShowPreviousMarks = true };
 
-            User adminUser = new User { Id = 1, Name = "Admin", Surname = "Adminov", Login = "admin", Password = "123", RoleId = adminRole.Id, StatusId = workingStatus.Id, DepartmentId = adminDepartment.Id};
-            User user1User = new User { Id = 2, Name = "User1", Surname = "Userov", Login = "user1", Password = "123", RoleId = employeeRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id};
-            User user2User = new User { Id = 3, Name = "User2", Surname = "Userov", Login = "user2", Password = "123", RoleId = employeeRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id };
-            User user3User = new User { Id = 4, Name = "User3", Surname = "Userov", Login = "user3", Password = "123", RoleId = employeeRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id };
-            User leadUser = new User { Id = 5, Name = "Lead", Surname = "Leadov", Login = "lead", Password = "123", RoleId = leadRole.Id, StatusId = workingStatus.Id, DepartmentId = programmersDepartment.Id};
-            User chiefUser = new User { Id = 6, Name = "Chief", Surname = "Chiefov", Login = "chief", Password = "123", RoleId = chiefRole.Id, StatusId = workingStatus.Id , DepartmentId = programmersDepartment.Id};
+            //admin
+            User adminUser = new User
+            {
+                Id = 1,
+                Name = "Admin",
+                Surname = "Adminov",
+                Login = "admin",
+                Password = "123",
+                RoleId = adminRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = adminDepartment.Id
+            };
+
+            //programmers
+            User progUser1 = new User 
+            { 
+                Id = 2, 
+                Name = "ProgUser1", 
+                Surname = "ProgUserov", 
+                Login = "progUser1", 
+                Password = "123", 
+                RoleId = employeeRole.Id, 
+                StatusId = workingStatus.Id, 
+                DepartmentId = programmersDepartment.Id
+            };
+            User progUser2 = new User 
+            { 
+                Id = 3, 
+                Name = "ProgUser2", 
+                Surname = "ProgUserov", 
+                Login = "progUser2", 
+                Password = "123", 
+                RoleId = employeeRole.Id, 
+                StatusId = workingStatus.Id, 
+                DepartmentId = programmersDepartment.Id 
+            };
+            User progUser3 = new User 
+            { 
+                Id = 4, 
+                Name = "ProgUser3", 
+                Surname = "ProgUserov", 
+                Login = "progUser3", 
+                Password = "123", 
+                RoleId = employeeRole.Id, 
+                StatusId = workingStatus.Id, 
+                DepartmentId = programmersDepartment.Id 
+            };
+            User progLead = new User
+            {
+                Id = 5,
+                Name = "ProgLead",
+                Surname = "ProgLeadov",
+                Login = "progLead",
+                Password = "123",
+                RoleId = leadRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = programmersDepartment.Id
+            };
+            User progChief = new User 
+            { 
+                Id = 6, 
+                Name = "ProgChief", 
+                Surname = "ProgChiefov", 
+                Login = "progChief", 
+                Password = "123", 
+                RoleId = chiefRole.Id, 
+                StatusId = workingStatus.Id, 
+                DepartmentId = programmersDepartment.Id
+            };
+
+            //lawyers
+            User lawUser1 = new User
+            {
+                Id = 7,
+                Name = "LawUser1",
+                Surname = "LawUserov",
+                Login = "lawUser1",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = lawyersDepartment.Id
+            };
+            User lawUser2 = new User
+            {
+                Id = 8,
+                Name = "LawUser2",
+                Surname = "LawUserov",
+                Login = "lawUser2",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = lawyersDepartment.Id
+            };
+            User lawUser3 = new User
+            {
+                Id = 9,
+                Name = "LawUser3",
+                Surname = "LawUserov",
+                Login = "lawUser3",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = lawyersDepartment.Id
+            };
+            User lawLead = new User
+            {
+                Id = 10,
+                Name = "LawLead",
+                Surname = "LawLeadov",
+                Login = "lawLead",
+                Password = "123",
+                RoleId = leadRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = lawyersDepartment.Id
+            };
+            User lawChief = new User
+            {
+                Id = 11,
+                Name = "LawChief",
+                Surname = "LawChiefov",
+                Login = "lawChief",
+                Password = "123",
+                RoleId = chiefRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = lawyersDepartment.Id
+            };
+
+            //testers
+            User testUser1 = new User
+            {
+                Id = 12,
+                Name = "TestUser1",
+                Surname = "TestUserov",
+                Login = "testUser1",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = testersDepartment.Id
+            };
+            User testUser2 = new User
+            {
+                Id = 13,
+                Name = "TestUser2",
+                Surname = "TestUserov",
+                Login = "testUser2",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = testersDepartment.Id
+            };
+            User testUser3 = new User
+            {
+                Id = 14,
+                Name = "TestUser3",
+                Surname = "TestUserov",
+                Login = "testUser3",
+                Password = "123",
+                RoleId = employeeRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = testersDepartment.Id
+            };
+            User testLead = new User
+            {
+                Id = 15,
+                Name = "TestLead",
+                Surname = "TestLeadov",
+                Login = "testLead",
+                Password = "123",
+                RoleId = leadRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = testersDepartment.Id
+            };
+            User testChief = new User
+            {
+                Id = 16,
+                Name = "TestChief",
+                Surname = "TestChiefov",
+                Login = "testChief",
+                Password = "123",
+                RoleId = chiefRole.Id,
+                StatusId = workingStatus.Id,
+                DepartmentId = testersDepartment.Id
+            };
+
 
             Parameter parameter1 = new Parameter { Id = 1, Name = "Responsibility level", Coefficient = 0 };
             Parameter parameter2 = new Parameter { Id = 2, Name = "Level of independence", Coefficient = 0 };
@@ -59,8 +237,14 @@ namespace EmployeePerformanceApp.Context
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, chiefRole, leadRole, employeeRole });
             modelBuilder.Entity<Status>().HasData(new Status[] { workingStatus, firedStatus });
-            modelBuilder.Entity<Department>().HasData(new Department[] { adminDepartment, programmersDepartment, lawyersDepartment });
-            modelBuilder.Entity<User>().HasData(new User[] { adminUser, user1User, user2User, user3User, leadUser, chiefUser });
+            modelBuilder.Entity<Department>().HasData(new Department[] { adminDepartment, programmersDepartment, lawyersDepartment, testersDepartment });
+            modelBuilder.Entity<User>().HasData(new User[] 
+            { 
+                adminUser,
+                progUser1, progUser2, progUser3, progLead, progChief,
+                lawUser1, lawUser2, lawUser3, lawLead, lawChief,
+                testUser1, testUser2, testUser3, testLead, testChief
+            });
             //modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, parameter3, parameter4 });
             //modelBuilder.Entity<Workplace>().HasOne(x => x.Reservation).WithOne(x => x.Workplace);
 
