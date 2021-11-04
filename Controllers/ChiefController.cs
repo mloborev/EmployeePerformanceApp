@@ -33,6 +33,16 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Chief")]
         [HttpGet]
+        public async Task<IActionResult> GetAllSelections()
+        {
+            GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
+            mymodel.TopUsers = await _userRepository.GetAllData();
+            mymodel.BottomUsers = await _userRepository.GetAllData();
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
         public async Task<IActionResult> GetAllMarks()
         {
             List<Mark> marks = await _markRepository.GetAllData();
@@ -58,19 +68,24 @@ namespace EmployeePerformanceApp.Controllers
         public async Task<IActionResult> GetAllActualMarks()
         {
             List<Mark> marks = await _markRepository.GetAllData();
-            List<User> assessors = new List<User>();
-            foreach(var item in marks)
+            List<Mark> actualMarks = new List<Mark>();
+            TimeSpan diff;
+            foreach(Mark item in marks)
             {
-                assessors.Add(await _userRepository.GetUserById(item.AssessorId));
+                diff = DateTime.Now.Subtract(item.AssesmentDate);
+                if(diff.TotalDays < 90)
+                {
+                    actualMarks.Add(item);
+                }
             }
 
             User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             GetAllMarksViewModel mymodel = new GetAllMarksViewModel();
             mymodel.CurrentUserDepartmentId = user.DepartmentId;
-            mymodel.Assessors = assessors;
-            mymodel.Marks = marks;
+            mymodel.Marks = actualMarks;
             mymodel.Parameters = await _parameterRepository.GetAllData();
             mymodel.Users = await _userRepository.GetAllData();
+
             return View(mymodel);
         }
 
@@ -84,14 +99,6 @@ namespace EmployeePerformanceApp.Controllers
             mymodel.Users = await _userRepository.GetAllData();
             return View(mymodel);
         }
-
-        /*[Authorize(Roles = "Chief")]
-        [HttpPost]
-        public async Task<IActionResult> AddMark(int parameterId, int markValue, string markDescription)
-        {
-            await _markService.AddMark(parameterId, markValue, markDescription);
-            return RedirectToAction("Index", "Chief");
-        }*/
 
         [Authorize(Roles = "Chief")]
         [HttpGet]

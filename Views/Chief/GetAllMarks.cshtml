@@ -11,26 +11,6 @@
         <td>Assessor</td>
         <td>Assessment Date</td>
     </tr>
-
-    @*@foreach (Mark mark in Model.Marks)
-    {
-        if (mark.User.DepartmentId != Model.CurrentUserDepartmentId)
-            continue;
-        <tr>
-            <td>@mark.Parameter.Name</td>
-            <td>@mark.MarkValue</td>
-            <td>@mark.MarkDescription</td>
-            <td>@mark.User.Surname @mark.User.Name</td>
-            <td>
-                @foreach(User user in Model.Assessors)
-                {
-                    <p>@user.Surname @user.Name</p>
-                }
-            </td>
-            <td>@mark.AssesmentDate</td>
-        </tr>
-    }*@
-
         @foreach (Mark mark in Model.Marks)
         {
             if (mark.User.DepartmentId != Model.CurrentUserDepartmentId)

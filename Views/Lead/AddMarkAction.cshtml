@@ -13,7 +13,7 @@
             {
                 @if (parameter.DepartmentId != Model.LeadDepartmentId)
                     continue;
-                <option value="@parameter.Id">@parameter.Name</option>
+                <option value="@parameter.Id">@parameter.Name, Coefficient: @parameter.Coefficient</option>
             }
         </select>
     </div>

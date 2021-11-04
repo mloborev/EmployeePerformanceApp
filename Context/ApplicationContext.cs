@@ -226,10 +226,9 @@ namespace EmployeePerformanceApp.Context
             };
 
 
-            Parameter parameter1 = new Parameter { Id = 1, Name = "Responsibility level", Coefficient = 0 };
-            Parameter parameter2 = new Parameter { Id = 2, Name = "Level of independence", Coefficient = 0 };
-            Parameter parameter3 = new Parameter { Id = 3, Name = "Team communication", Coefficient = 0 };
-            Parameter parameter4 = new Parameter { Id = 4, Name = "Leadership skills", Coefficient = 0 };
+            Parameter parameter1 = new Parameter { Id = 1, Name = "Work quality", Coefficient = 1, DepartmentId = programmersDepartment.Id};
+            Parameter parameter2 = new Parameter { Id = 2, Name = "Skills level", Coefficient = 1, DepartmentId = programmersDepartment.Id };
+            Parameter parameter3 = new Parameter { Id = 3, Name = "Work speed", Coefficient = 1, DepartmentId = programmersDepartment.Id };
 
             modelBuilder.Entity<Selection>(x => {
                 x.Navigation(s => s.Parameters).AutoInclude();
