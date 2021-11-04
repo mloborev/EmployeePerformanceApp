@@ -15,13 +15,15 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IMarkRepository _markRepository;
         private readonly IParameterRepository _parameterRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ISelectionRepository _selectionRepository;
 
         private readonly IMarkService _markService;
-        public ChiefController(IMarkRepository markRepository, IParameterRepository parameterRepository, IUserRepository userRepository, IMarkService markService)
+        public ChiefController(IMarkRepository markRepository, IParameterRepository parameterRepository, IUserRepository userRepository, ISelectionRepository selectionRepository, IMarkService markService)
         {
             _markRepository = markRepository;
             _parameterRepository = parameterRepository;
             _userRepository = userRepository;
+            _selectionRepository = selectionRepository;
 
             _markService = markService;
         }
@@ -29,6 +31,16 @@ namespace EmployeePerformanceApp.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
+        public async Task<IActionResult> ChooseSelection()
+        {
+            ChooseSelectionViewModel mymodel = new ChooseSelectionViewModel();
+            mymodel.Selections = await _selectionRepository.GetAllData();
+            mymodel.Parameters = await _parameterRepository.GetAllData();
+            return View(mymodel);
         }
 
         [Authorize(Roles = "Chief")]

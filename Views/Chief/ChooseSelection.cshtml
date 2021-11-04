@@ -1,0 +1,28 @@
+﻿@model ChooseSelectionViewModel
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Department</td>
+        <td>Name</td>
+        <td>Parameters</td>
+        <td>Selection Details</td>
+    </tr>
+    @foreach (Selection item in Model.Selections)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Department.Name</td>
+            <td>@item.Name</td>
+            <td>
+                @foreach (Parameter lala in item.Parameters)
+                {
+                    <p>@lala.Name</p>
+                }
+            </td>
+            <td><a asp-controller="Chief" asp-action="SelectionDetails" asp-route-selectionId="@item.Id">Details</a></td>
+        </tr>
+    }
+</table>

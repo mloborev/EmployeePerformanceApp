@@ -29,7 +29,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<List<Selection>> GetAllData()
         {
-            return await db.Selections.Include(x => x.Department).ToListAsync();
+            return await db.Selections.Include(x => x.Department).Include(x => x.Parameters).ToListAsync();
         }
 
         public async Task<List<Selection>> GetSelectionsByIds(int[] ids)
