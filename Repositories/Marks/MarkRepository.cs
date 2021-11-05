@@ -27,9 +27,9 @@ namespace EmployeePerformanceApp.Repositories
             return await db.Marks.Include(x => x.User).Include(x => x.Parameter).ToListAsync();
         }
 
-        public Task<Mark> GetMarkById(int id)
+        public async Task<List<Mark>> GetMarkByUserAndDepartmentIds(int userId, int parameterId)
         {
-            throw new NotImplementedException();
+            return await db.Marks.Where(x => x.UserId == userId && x.ParameterId == parameterId).ToListAsync();
         }
     }
 }

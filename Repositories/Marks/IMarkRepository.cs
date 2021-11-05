@@ -8,8 +8,8 @@ namespace EmployeePerformanceApp.Repositories
 {
     public interface IMarkRepository
     {
-        Task<Mark> GetMarkById(int id);
         Task<List<Mark>> GetAllData();
         Task AddMark(Mark mark);
+        Task<List<Mark>> GetMarkByUserAndDepartmentIds(int userId, int parameterId);
     }
 }

@@ -45,6 +45,52 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Chief")]
         [HttpGet]
+        public async Task<IActionResult> SelectionDetails(int selectionId)
+        {
+            User chief = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            List<User> users = await _userRepository.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
+
+            Selection selection = await _selectionRepository.GetSelectionById(selectionId);
+
+            List<Parameter> selectionParameters = selection.Parameters.ToList();
+
+            object[,] usersTotal = new object[users.Count, 2];
+            int counter = 0;
+            foreach (var item in users)
+            {
+                double result = 0;
+
+                foreach (var parameter in selectionParameters)
+                {
+                    List<Mark> marks = await _markRepository.GetMarkByUserAndDepartmentIds(item.Id, parameter.Id);
+                    if(marks.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    int marksSum = 0;
+                    foreach(var mark in marks)
+                    {
+                        marksSum += mark.MarkValue;
+                    }
+                    result += marksSum / marks.Count * parameter.Coefficient;
+                    //result += (x + x1 + x2) / 3 * parameter.Coefficient;      
+                }
+                usersTotal[counter, 0] = item;
+                usersTotal[counter, 1] = result;
+
+
+                counter++;
+            }
+
+
+
+            GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
+            return View();
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
         public async Task<IActionResult> GetAllSelections()
         {
             GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();

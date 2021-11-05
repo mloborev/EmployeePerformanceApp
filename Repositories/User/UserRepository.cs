@@ -12,9 +12,11 @@ namespace EmployeePerformanceApp.Repositories
     public class UserRepository : IUserRepository
     {
         private ApplicationContext db;
-        public UserRepository(ApplicationContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserRepository(ApplicationContext context, IHttpContextAccessor httpContextAccessor)
         {
             db = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task AddUser(User user)
@@ -33,6 +35,19 @@ namespace EmployeePerformanceApp.Repositories
         public async Task<bool> CheckIsUserExistByLogin(string login)
         {
             return await db.Users.AnyAsync(x => x.Login == login);
+        }
+
+        public async Task<List<User>> GetUsersByDepartmentId(int id)
+        {
+            return await db.Users.Where(x => x.DepartmentId == id).ToListAsync();
+        }
+
+        public async Task<List<User>> GetUsersByDepartmentIdNotChief(int id)
+        {
+            int currentUserId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "Id").Value);
+            User currentUser = await GetUserById(currentUserId);
+
+            return await db.Users.Where(x => x.DepartmentId == id && x.RoleId != currentUser.RoleId).ToListAsync();
         }
 
         public async Task<List<User>> GetAllData()

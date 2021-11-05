@@ -10,6 +10,8 @@ namespace EmployeePerformanceApp.Repositories
     {
         Task<User> GetUserById(int id);
         Task<User> GetUserByLoginPassword(string userLogin, string userPassword);
+        Task<List<User>> GetUsersByDepartmentId(int id);
+        Task<List<User>> GetUsersByDepartmentIdNotChief(int id);
         Task<List<User>> GetAllData();
         Task AddUser(User user);
         Task DeleteUser(int id);
