@@ -71,7 +71,7 @@ namespace EmployeePerformanceApp.Controllers
                     double marksSum = 0d;
                     foreach(var mark in marks)
                     {
-                        marksSum += mark.MarkValue;
+                        marksSum += (double)mark.MarkValue;
                     }
                     result += marksSum / (double)marks.Count * (double)parameter.Coefficient;
                     //result += (x + x1 + x2) / 3 * parameter.Coefficient;      
@@ -83,19 +83,42 @@ namespace EmployeePerformanceApp.Controllers
                 counter++;
             }
 
-
-
+            double temp;
+            for (int i = 0; i < usersTotal.GetUpperBound(0) + 1; i++)
+            {
+                for (int j = i + 1; j < usersTotal.GetUpperBound(0) + 1; j++)
+                {
+                    if ((double)usersTotal[i, 1] > (double)usersTotal[j, 1])
+                    {
+                        temp = (double)usersTotal[i, 1];
+                        usersTotal[i, 1] = usersTotal[j, 1];
+                        usersTotal[j, 1] = temp;
+                    }
+                }
+            }
             GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
-            return View();
-        }
 
-        [Authorize(Roles = "Chief")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllSelections()
-        {
-            GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
-            mymodel.TopUsers = await _userRepository.GetAllData();
-            mymodel.BottomUsers = await _userRepository.GetAllData();
+            List<User> sortedUsers = new List<User>();
+            for(int i = 0; i < usersTotal.GetUpperBound(0) + 1; i++)
+            {
+                sortedUsers.Add((User)usersTotal[i, 0]);
+            }
+
+            List<User> top = new List<User>();
+            List<User> bottom = new List<User>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                bottom.Add(sortedUsers[i]);
+            }
+
+            for (int i = sortedUsers.Count - 1; i >= sortedUsers.Count - 3; i--)
+            {
+                top.Add(sortedUsers[i]);
+            }
+
+            mymodel.TopUsers = top;
+            mymodel.BottomUsers = bottom;
             return View(mymodel);
         }
 

@@ -8,20 +8,12 @@
     <tr>
         <td>Surname</td>
         <td>Name</td>
-        <td>Role</td>
-        <td>Status</td>
-        <td>Department</td>
     </tr>
     @foreach (User user in Model.TopUsers)
     {
-        if (user.Department.Name == "Admin")
-            continue;
         <tr>
             <td>@user.Surname</td>
             <td>@user.Name</td>
-            <td>@user.Role.Name</td>
-            <td>@user.Status.Name</td>
-            <td>@user.Department.Name</td>
         </tr>
     }
 </table>
@@ -32,20 +24,12 @@
     <tr>
         <td>Surname</td>
         <td>Name</td>
-        <td>Role</td>
-        <td>Status</td>
-        <td>Department</td>
     </tr>
     @foreach (User user in Model.BottomUsers)
     {
-        if (user.Department.Name == "Admin")
-            continue;
         <tr>
             <td>@user.Surname</td>
             <td>@user.Name</td>
-            <td>@user.Role.Name</td>
-            <td>@user.Status.Name</td>
-            <td>@user.Department.Name</td>
         </tr>
     }
 </table>
