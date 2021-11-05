@@ -86,7 +86,7 @@ namespace EmployeePerformanceApp.Context
                 Password = "123", 
                 RoleId = employeeRole.Id, 
                 StatusId = workingStatus.Id, 
-                DepartmentId = programmersDepartment.Id 
+                DepartmentId = programmersDepartment.Id
             };
             User progLead = new User
             {

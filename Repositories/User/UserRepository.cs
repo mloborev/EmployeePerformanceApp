@@ -47,7 +47,13 @@ namespace EmployeePerformanceApp.Repositories
             int currentUserId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "Id").Value);
             User currentUser = await GetUserById(currentUserId);
 
-            return await db.Users.Where(x => x.DepartmentId == id && x.RoleId != currentUser.RoleId).ToListAsync();
+            return await db.Users
+                .Include(x => x.Marks)
+                .Include(u => u.Role)
+                .Include(u => u.Status)
+                .Include(u => u.Department)
+                .Where(x => x.DepartmentId == id && x.RoleId != currentUser.RoleId)
+                .ToListAsync();
         }
 
         public async Task<List<User>> GetAllData()
@@ -57,7 +63,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<User> GetUserById(int id)
         {
-            User user = await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(x => x.Id == id).FirstOrDefaultAsync();
+            User user = await db.Users.Include(x => x.Marks).Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(x => x.Id == id).FirstOrDefaultAsync();
             return user;
         }
 

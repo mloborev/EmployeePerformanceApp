@@ -52,24 +52,26 @@ namespace EmployeePerformanceApp.Controllers
 
             Selection selection = await _selectionRepository.GetSelectionById(selectionId);
 
+
             List<Parameter> selectionParameters = selection.Parameters.ToList();
 
             object[,] usersTotal = new object[users.Count, 2];
+
             int counter = 0;
             foreach (var item in users)
             {
-                double result = 0d;
+                double result = 0.0;
 
                 foreach (var parameter in selectionParameters)
                 {
                     List<Mark> marks = await _markRepository.GetMarkByUserAndDepartmentIds(item.Id, parameter.Id);
-                    if(marks.Count == 0)
+                    if (marks.Count == 0)
                     {
                         continue;
                     }
 
-                    double marksSum = 0d;
-                    foreach(var mark in marks)
+                    double marksSum = 0.0;
+                    foreach (var mark in marks)
                     {
                         marksSum += (double)mark.MarkValue;
                     }
@@ -99,7 +101,7 @@ namespace EmployeePerformanceApp.Controllers
             GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
 
             List<User> sortedUsers = new List<User>();
-            for(int i = 0; i < usersTotal.GetUpperBound(0) + 1; i++)
+            for (int i = 0; i < usersTotal.GetUpperBound(0) + 1; i++)
             {
                 sortedUsers.Add((User)usersTotal[i, 0]);
             }
@@ -119,6 +121,7 @@ namespace EmployeePerformanceApp.Controllers
 
             mymodel.TopUsers = top;
             mymodel.BottomUsers = bottom;
+
             return View(mymodel);
         }
 
