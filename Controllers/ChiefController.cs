@@ -58,7 +58,7 @@ namespace EmployeePerformanceApp.Controllers
             int counter = 0;
             foreach (var item in users)
             {
-                double result = 0;
+                double result = 0d;
 
                 foreach (var parameter in selectionParameters)
                 {
@@ -68,12 +68,12 @@ namespace EmployeePerformanceApp.Controllers
                         continue;
                     }
 
-                    int marksSum = 0;
+                    double marksSum = 0d;
                     foreach(var mark in marks)
                     {
                         marksSum += mark.MarkValue;
                     }
-                    result += marksSum / marks.Count * parameter.Coefficient;
+                    result += marksSum / (double)marks.Count * (double)parameter.Coefficient;
                     //result += (x + x1 + x2) / 3 * parameter.Coefficient;      
                 }
                 usersTotal[counter, 0] = item;
