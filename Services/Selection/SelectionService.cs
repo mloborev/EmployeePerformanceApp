@@ -9,14 +9,10 @@ namespace EmployeePerformanceApp.Services
     {
         private readonly ISelectionRepository _selectionRepository;
         private readonly IParameterRepository _parameterRepository;
-        /*        private readonly IUserRepository _userRepository;
-                private readonly IHttpContextAccessor _httpContextAccessor;*/
-        public SelectionService(ISelectionRepository selectionRepository, IParameterRepository parameterRepository/*, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor*/)
+        public SelectionService(ISelectionRepository selectionRepository, IParameterRepository parameterRepository)
         {
             _selectionRepository = selectionRepository;
             _parameterRepository = parameterRepository;
-            /*_userRepository = userRepository;
-            _httpContextAccessor = httpContextAccessor;*/
         }
 
         public async Task AddSelection(int departmentId, string selectionName, int[] arr)

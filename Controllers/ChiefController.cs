@@ -135,7 +135,6 @@ namespace EmployeePerformanceApp.Controllers
             var bottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).Select(t => t.user).ToList();
             var topUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).Select(t => t.user).ToList();
 
-
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Users");
@@ -177,9 +176,6 @@ namespace EmployeePerformanceApp.Controllers
                         $"Selection_{selection.Name}_{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}.xlsx");
                 }
             }
-
-
-            //return RedirectToAction("ChooseSelection", "Chief");
         }
 
         [Authorize(Roles = "Chief")]
