@@ -87,3 +87,7 @@ C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\De
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\GetAllActualMarks.cshtml.g.cs
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\ChooseSelection.cshtml.g.cs
 C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\obj\Debug\net5.0\Razor\Views\Chief\SelectionDetails.cshtml.g.cs
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\bin\Debug\net5.0\ClosedXML.dll
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\bin\Debug\net5.0\DocumentFormat.OpenXml.dll
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\bin\Debug\net5.0\ExcelNumberFormat.dll
+C:\Users\maxim\source\repos\EmployeePerformanceApp\EmployeePerformanceApp\bin\Debug\net5.0\System.IO.Packaging.dll

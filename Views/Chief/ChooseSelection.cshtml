@@ -9,6 +9,7 @@
         <td>Name</td>
         <td>Parameters</td>
         <td>Selection Details</td>
+        <td>Export in Excel</td>
     </tr>
     @foreach (Selection item in Model.Selections)
     {
@@ -23,6 +24,7 @@
                 }
             </td>
             <td><a asp-controller="Chief" asp-action="SelectionDetails" asp-route-selectionId="@item.Id">Details</a></td>
+            <td><a asp-controller="Chief" asp-action="ExportToExcel" asp-route-selectionId="@item.Id">Download File</a></td>
         </tr>
     }
 </table>
