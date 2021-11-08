@@ -23,5 +23,10 @@ namespace EmployeePerformanceApp.Services
             //await _parameterService.SetParametersInUse(parametersArray);
             await _selectionRepository.AddSelection(selection);
         }
+
+        public async Task<List<Selection>> GetAllData()
+        {
+            return await _selectionRepository.GetAllData();
+        }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Services
 {
-    public interface ISelectionService
+    public interface IStatusService
     {
-        Task AddSelection(int departmentId, string selectionName, int[] arr);
-        Task<List<Selection>> GetAllData();
+        Task<List<Status>> GetAllData();
     }
 }

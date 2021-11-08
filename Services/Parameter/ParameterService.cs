@@ -22,9 +22,15 @@ namespace EmployeePerformanceApp.Services
             await _parameterRepository.AddParameter(parameter);
         }
 
-        /*public async Task SetParametersInUse(List<Parameter> parameters)
+        public async Task<List<Parameter>> GetAllData()
         {
-            await _parameterRepository.SetParametersInUse(parameters);
-        }*/
+            return await _parameterRepository.GetAllData();
+        }
+
+        public async Task DeleteParameter(int parameterId)
+        {
+            Parameter parameter = await _parameterRepository.GetParameterById(parameterId);
+            await _parameterRepository.DeleteParameter(parameter);
+        }
     }
 }

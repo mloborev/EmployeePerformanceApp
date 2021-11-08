@@ -12,6 +12,6 @@ namespace EmployeePerformanceApp.Repositories
         Task<List<Parameter>> GetParametersByIds(int[] ids);
         Task<Parameter> GetParameterById(int id);
         Task AddParameter(Parameter parameter);
-        Task DeleteParameter(int id);
+        Task DeleteParameter(Parameter parameter);
     }
 }

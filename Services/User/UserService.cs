@@ -20,5 +20,21 @@ namespace EmployeePerformanceApp.Services
             User user = new User { Surname = surname, Name = name, Login = login, Password = password, RoleId = roleId, StatusId = statusId, DepartmentId = departmentId };
             await _userRepository.AddUser(user);
         }
+
+        public async Task<List<User>> GetAllData()
+        {
+            return await _userRepository.GetAllData();
+        }
+
+        public async Task<bool> CheckIsUserExistByLogin(string login)
+        {
+            return await _userRepository.CheckIsUserExistByLogin(login);
+        }
+
+        public async Task DeleteUser(int id)
+        {
+            User user = await _userRepository.GetUserById(id);
+            await _userRepository.DeleteUser(user);
+        }
     }
 }

@@ -37,9 +37,8 @@ namespace EmployeePerformanceApp.Repositories
             await db.SaveChangesAsync();
         }
 
-        public async Task DeleteParameter(int id)
+        public async Task DeleteParameter(Parameter parameter)
         {
-            Parameter parameter = await GetParameterById(id);
             db.Remove(parameter);
             await db.SaveChangesAsync();
         }

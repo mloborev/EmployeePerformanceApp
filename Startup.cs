@@ -53,6 +53,9 @@ namespace EmployeePerformanceApp
             services.AddScoped<IParameterService, ParameterService>();
             services.AddScoped<ISelectionService, SelectionService>();
             services.AddScoped<IMarkService, MarkService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IStatusService, StatusService>();
 
             services.AddControllersWithViews();
         }

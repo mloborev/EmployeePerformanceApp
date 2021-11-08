@@ -25,9 +25,8 @@ namespace EmployeePerformanceApp.Repositories
             await db.SaveChangesAsync();
         }
 
-        public async Task DeleteUser(int id)
+        public async Task DeleteUser(User user)
         {
-            User user = await GetUserById(id);
             db.Remove(user);
             await db.SaveChangesAsync();
         }
@@ -58,7 +57,7 @@ namespace EmployeePerformanceApp.Repositories
 
         public async Task<List<User>> GetAllData()
         {
-            return await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).ToListAsync();
+            return await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Include(x => x.Marks).ToListAsync();
         }
 
         public async Task<User> GetUserById(int id)

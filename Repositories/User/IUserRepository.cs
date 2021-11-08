@@ -14,7 +14,7 @@ namespace EmployeePerformanceApp.Repositories
         Task<List<User>> GetUsersByDepartmentIdNotChief(int id);
         Task<List<User>> GetAllData();
         Task AddUser(User user);
-        Task DeleteUser(int id);
+        Task DeleteUser(User user);
         Task<bool> CheckIsUserExistByLogin(string login);
     }
 }
