@@ -78,18 +78,18 @@ namespace EmployeePerformanceApp.Controllers
                 foreach (var kv in marks)
                 {
                     var average = kv.Value.Average();
-                    total += average * parameters[kv.Key].Coefficient;
+                    total += Math.Round(average * parameters[kv.Key].Coefficient, 2);
                 }
 
                 markedUsers.Add((user, total));
             }
 
-            var bottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).Select(t => t.user);
-            var topUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).Select(t => t.user);
+            var dictBottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).ToList();
+            var dictTopUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).ToList();
 
             GetAllSelectionsViewModel mymodel = new GetAllSelectionsViewModel();
-            mymodel.TopUsers = topUsers;
-            mymodel.BottomUsers = bottomUsers;
+            mymodel.DictTopUsers = dictTopUsers;
+            mymodel.DictBottomUsers = dictBottomUsers;
             return View(mymodel);
         }
 
@@ -126,14 +126,14 @@ namespace EmployeePerformanceApp.Controllers
                 foreach (var kv in marks)
                 {
                     var average = kv.Value.Average();
-                    total += average * parameters[kv.Key].Coefficient;
+                    total += Math.Round(average * parameters[kv.Key].Coefficient, 2);
                 }
 
                 markedUsers.Add((user, total));
             }
 
-            var bottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).Select(t => t.user).ToList();
-            var topUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).Select(t => t.user).ToList();
+            var dictBottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).ToList();
+            var dictTopUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).ToList();
 
             using (var workbook = new XLWorkbook())
             {
@@ -144,12 +144,13 @@ namespace EmployeePerformanceApp.Controllers
                 worksheet.Cell(currentRow, 1).Value = "Surname";
                 worksheet.Cell(currentRow, 2).Value = "Name";
                 worksheet.Cell(currentRow, 3).Value = "Role";
-                foreach (var user in topUsers)
+                foreach (var item in dictTopUsers)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = user.Surname;
-                    worksheet.Cell(currentRow, 2).Value = user.Name;
-                    worksheet.Cell(currentRow, 3).Value = user.Role.Name;
+                    worksheet.Cell(currentRow, 1).Value = item.user.Surname;
+                    worksheet.Cell(currentRow, 2).Value = item.user.Name;
+                    worksheet.Cell(currentRow, 3).Value = item.user.Role.Name;
+                    worksheet.Cell(currentRow, 4).Value = item.mark;
                 }
                 currentRow += 2;
                 worksheet.Cell(currentRow, 1).Value = "Bottom Users";
@@ -157,12 +158,13 @@ namespace EmployeePerformanceApp.Controllers
                 worksheet.Cell(currentRow, 1).Value = "Surname";
                 worksheet.Cell(currentRow, 2).Value = "Name";
                 worksheet.Cell(currentRow, 3).Value = "Role";
-                foreach (var user in bottomUsers)
+                foreach (var item in dictBottomUsers)
                 {
                     currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = user.Surname;
-                    worksheet.Cell(currentRow, 2).Value = user.Name;
-                    worksheet.Cell(currentRow, 3).Value = user.Role.Name;
+                    worksheet.Cell(currentRow, 1).Value = item.user.Surname;
+                    worksheet.Cell(currentRow, 2).Value = item.user.Name;
+                    worksheet.Cell(currentRow, 3).Value = item.user.Role.Name;
+                    worksheet.Cell(currentRow, 4).Value = item.mark;
                 }
 
                 using (var stream = new MemoryStream())

@@ -36,5 +36,11 @@ namespace EmployeePerformanceApp.Services
             User user = await _userRepository.GetUserById(id);
             await _userRepository.DeleteUser(user);
         }
+
+        public async Task SetWorkingFlag(int id)
+        {
+            User user = await _userRepository.GetUserById(id);
+            await _userRepository.SetWorkingFlag(user);
+        }
     }
 }

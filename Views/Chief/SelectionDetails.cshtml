@@ -9,13 +9,15 @@
         <td>Surname</td>
         <td>Name</td>
         <td>Role</td>
+        <td>Total</td>
     </tr>
-    @foreach (User user in Model.TopUsers)
+    @foreach (var item in Model.DictTopUsers)
     {
         <tr>
-            <td>@user.Surname</td>
-            <td>@user.Name</td>
-            <td>@user.Role.Name</td>
+            <td>@item.user.Surname</td>
+            <td>@item.user.Name </td>
+            <td>@item.user.Role.Name</td>
+            <td>@item.mark</td>
         </tr>
     }
 </table>
@@ -27,13 +29,15 @@
         <td>Surname</td>
         <td>Name</td>
         <td>Role</td>
+        <td>Total</td>
     </tr>
-    @foreach (User user in Model.BottomUsers)
+    @foreach (var item in Model.DictBottomUsers)
     {
     <tr>
-        <td>@user.Surname</td>
-        <td>@user.Name</td>
-        <td>@user.Role.Name</td>
+        <td>@item.user.Surname</td>
+        <td>@item.user.Name </td>
+        <td>@item.user.Role.Name</td>
+        <td>@item.mark</td>
     </tr>
     }
 </table>

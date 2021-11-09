@@ -155,7 +155,8 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUserAction(int id)
         {
-            await _userService.DeleteUser(id);
+            //await _userService.DeleteUser(id);
+            await _userService.SetWorkingFlag(id);
             return RedirectToAction("DeleteUser", "Admin");
         }
 

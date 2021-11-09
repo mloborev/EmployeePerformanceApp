@@ -12,7 +12,7 @@
         <td>Role</td>
         <td>Status</td>
         <td>Department</td>
-        <td>Delete User</td>
+        <td>Fire/Hire user</td>
     </tr>
     @foreach (User user in Model.Users)
     {
@@ -35,49 +35,17 @@
             <td>@user.Role.Name</td>
             <td>@user.Status.Name</td>
             <td>@user.Department.Name</td>
-            <td><a asp-controller="Admin" asp-action="DeleteUserAction" asp-route-id="@user.Id">Delete</a></td>
+            <td>
+                <a asp-controller="Admin" 
+                   asp-action="DeleteUserAction" 
+                   asp-route-id="@user.Id"
+                >
+                    @(user.Status.Name == "Working" ? "Fire" : "Hire")
+                </a>
+            </td>
         </tr>
     }
 </table>
-
-@*<table class="table">
-        <tr>
-            <td>LastName</td>
-            <td>FirstName</td>
-            <td>Login</td>
-            <td>Password</td>
-            <td>Role</td>
-            <td>Status</td>
-            <td>Department</td>
-            <td>ID</td>
-        </tr>
-        @foreach (User user in Model.Users)
-        {
-            if (user.Department.DepartmentName == "Admins")
-            {
-                continue;
-            }
-            if (Model.LastName != null && !user.LastName.Contains(Model.LastName.Trim()) ||
-                Model.FirstName != null && !user.FirstName.Contains(Model.FirstName.Trim()) ||
-                Model.DepartmentName != null && !user.Department.DepartmentName.Contains(Model.DepartmentName.Trim()) ||
-                Model.StatusName != null && !user.Status.StatusName.Contains(Model.StatusName.Trim()) ||
-                Model.RoleName != null && !user.Role.RoleName.Contains(Model.RoleName.Trim()))
-            {
-                continue;
-            }
-
-            <tr>
-                <td>@user.LastName</td>
-                <td>@user.FirstName</td>
-                <td>@user.Login</td>
-                <td>@user.Password</td>
-                <td>@user.Role.RoleName</td>
-                <td>@user.Status.StatusName</td>
-                <td>@user.Department.DepartmentName</td>
-                <td>@user.ID</td>
-            </tr>
-        }
-    </table>*@
 
 <form method="post" asp-action="DeleteUser">
     <div class="text-center">
@@ -93,20 +61,3 @@
         </div>
     </div>
 </form>
-
-
-@*<div>
-        <label for="userId">Find by Id:</label>
-        <select name="userId">
-            @foreach (User user in Model.Users)
-            {
-                if (user.Name == "Admin")
-                    continue;
-                <option value="@user.Id">@user.Id, @user.Surname @user.Name</option>
-            }
-        </select>
-
-        <div>
-            <input type="submit" value="Delete" />
-        </div>
-    </div>*@

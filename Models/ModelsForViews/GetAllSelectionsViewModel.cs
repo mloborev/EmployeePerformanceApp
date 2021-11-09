@@ -7,7 +7,7 @@ namespace EmployeePerformanceApp.Models
 {
     public class GetAllSelectionsViewModel
     {
-        public IEnumerable<User> TopUsers { get; set; }
-        public IEnumerable<User> BottomUsers { get; set; }
+        public IEnumerable<(User user, double mark)> DictTopUsers { get; set; }
+        public IEnumerable<(User user, double mark)> DictBottomUsers { get; set; }
     }
 }

@@ -31,6 +31,16 @@ namespace EmployeePerformanceApp.Repositories
             await db.SaveChangesAsync();
         }
 
+        public async Task SetWorkingFlag(User user)
+        {
+            var user1 = await db.Users.Where(x => x.Id == user.Id).FirstOrDefaultAsync();
+            if (user1.Status.Name == "Working")
+                user1.StatusId = 2;
+            else
+                user1.StatusId = 1;
+            await db.SaveChangesAsync();
+        }
+
         public async Task<bool> CheckIsUserExistByLogin(string login)
         {
             return await db.Users.AnyAsync(x => x.Login == login);

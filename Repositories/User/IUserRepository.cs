@@ -15,6 +15,7 @@ namespace EmployeePerformanceApp.Repositories
         Task<List<User>> GetAllData();
         Task AddUser(User user);
         Task DeleteUser(User user);
+        Task SetWorkingFlag(User user);
         Task<bool> CheckIsUserExistByLogin(string login);
     }
 }

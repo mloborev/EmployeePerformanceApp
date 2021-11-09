@@ -24,10 +24,18 @@
         </select>
     </div>
 
+
+
     <input type="text" name="name" required placeholder="Name" />
-    <input type="number" min="0" max="1" step="0.01" name="coefficient" required placeholder="coefficient" />
+    <input type="number" class="coefficient-width" min="0" max="1" step="0.01" name="coefficient" required placeholder="coefficient" />
 
     <div>
         <input type="submit" value="Add" />
     </div>
 </form>
+
+<style>
+    .coefficient-width {
+        width: 100px; /* Ширина поля в пикселах */
+    }
+</style>
