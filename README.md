@@ -23,3 +23,5 @@ Chiefs can mark leads, can see all and only actual marks, see selections and dow
 ![alt text](https://github.com/mloborev/EmployeePerformanceApp/blob/main/images/seeSelections.png?raw=true)
 
 ![alt text](https://github.com/mloborev/EmployeePerformanceApp/blob/main/images/downloadFile.png?raw=true)
+
+![alt text](https://github.com/mloborev/EmployeePerformanceApp/blob/main/images/formula.png?raw=true)
