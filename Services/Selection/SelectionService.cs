@@ -28,5 +28,10 @@ namespace EmployeePerformanceApp.Services
         {
             return await _selectionRepository.GetAllData();
         }
+
+        public async Task<Selection> GetSelectionById(int id)
+        {
+            return await _selectionRepository.GetSelectionById(id);
+        }
     }
 }

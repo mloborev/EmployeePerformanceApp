@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EmployeePerformanceApp.Controllers;
-using Moq;
-using Xunit;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EmployeePerformanceApp.Repositories;
 using EmployeePerformanceApp.Models;
 using System.Threading.Tasks;
 using EmployeePerformanceApp.Services;
+using Moq;
+using Xunit;
 
 namespace EmployeePerformanceApp.Tests
 {

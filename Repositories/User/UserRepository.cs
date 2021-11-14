@@ -13,6 +13,7 @@ namespace EmployeePerformanceApp.Repositories
     {
         private ApplicationContext db;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public UserRepository(ApplicationContext context, IHttpContextAccessor httpContextAccessor)
         {
             db = context;

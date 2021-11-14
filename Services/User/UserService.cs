@@ -31,6 +31,16 @@ namespace EmployeePerformanceApp.Services
             return await _userRepository.CheckIsUserExistByLogin(login);
         }
 
+        public async Task<User> GetUserById(int id)
+        {
+            return await _userRepository.GetUserById(id);
+        }
+
+        public async Task<List<User>> GetUsersByDepartmentIdNotChief(int id)
+        {
+            return await _userRepository.GetUsersByDepartmentIdNotChief(id);
+        }
+
         public async Task DeleteUser(int id)
         {
             User user = await _userRepository.GetUserById(id);

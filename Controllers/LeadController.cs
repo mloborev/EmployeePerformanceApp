@@ -12,18 +12,16 @@ namespace EmployeePerformanceApp.Controllers
 {
     public class LeadController : Controller
     {
-        private readonly IMarkRepository _markRepository;
-        private readonly IParameterRepository _parameterRepository;
-        private readonly IUserRepository _userRepository;
-
         private readonly IMarkService _markService;
-        public LeadController(IMarkRepository markRepository, IParameterRepository parameterRepository, IUserRepository userRepository, IMarkService markService)
-        {
-            _markRepository = markRepository;
-            _parameterRepository = parameterRepository;
-            _userRepository = userRepository;
+        private readonly IUserService _userService;
+        private readonly IParameterService _parameterService;
 
+
+        public LeadController(IMarkService markService, IUserService userService, IParameterService parameterService)
+        {
             _markService = markService;
+            _userService = userService;
+            _parameterService = parameterService;
         }
 
         public IActionResult Index()
@@ -35,10 +33,10 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMark()
         {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             AddMarkViewModel mymodel = new AddMarkViewModel();
             mymodel.LeadDepartmentId = user.DepartmentId;
-            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
             return View(mymodel);
         }
 
@@ -54,13 +52,13 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMarkAction(int userId)
         {
-            User currentUser = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User currentUser = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
 
             AddMarkViewModel mymodel = new AddMarkViewModel();
             mymodel.LeadDepartmentId = currentUser.DepartmentId;
             mymodel.UserId = userId;
-            mymodel.Users = await _userRepository.GetAllData();
-            mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
+            mymodel.Parameters = await _parameterService.GetAllData();
             return View(mymodel);
         }
 

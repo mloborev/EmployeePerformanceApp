@@ -14,20 +14,17 @@ namespace EmployeePerformanceApp.Controllers
 {
     public class ChiefController : Controller
     {
-        private readonly IMarkRepository _markRepository;
-        private readonly IParameterRepository _parameterRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ISelectionRepository _selectionRepository;
-
         private readonly IMarkService _markService;
-        public ChiefController(IMarkRepository markRepository, IParameterRepository parameterRepository, IUserRepository userRepository, ISelectionRepository selectionRepository, IMarkService markService)
-        {
-            _markRepository = markRepository;
-            _parameterRepository = parameterRepository;
-            _userRepository = userRepository;
-            _selectionRepository = selectionRepository;
+        private readonly IUserService _userService;
+        private readonly ISelectionService _selectionService;
+        private readonly IParameterService _parameterService;
 
+        public ChiefController(IMarkService markService, IUserService userService, ISelectionService selectionService, IParameterService parameterService)
+        {
             _markService = markService;
+            _userService = userService;
+            _selectionService = selectionService;
+            _parameterService = parameterService;
         }
 
         public IActionResult Index()
@@ -40,20 +37,17 @@ namespace EmployeePerformanceApp.Controllers
         public async Task<IActionResult> ChooseSelection()
         {
             ChooseSelectionViewModel mymodel = new ChooseSelectionViewModel();
-            mymodel.Selections = await _selectionRepository.GetAllData();
-            mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.Selections = await _selectionService.GetAllData();
+            mymodel.Parameters = await _parameterService.GetAllData();
             return View(mymodel);
         }
 
-        [Authorize(Roles = "Chief")]
-        [HttpGet]
-        public async Task<IActionResult> SelectionDetails(int selectionId)
+        public async Task<List<(User user, double mark)>> ConstructUsersList(int selectionId)
         {
-            User chief = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<User> users = await _userRepository.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
+            User chief = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            List<User> users = await _userService.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
 
-            Selection selection = await _selectionRepository.GetSelectionById(selectionId);
-
+            Selection selection = await _selectionService.GetSelectionById(selectionId);
 
             var parameters = selection.Parameters.ToDictionary(p => p.Id, p => p);
 
@@ -83,6 +77,15 @@ namespace EmployeePerformanceApp.Controllers
 
                 markedUsers.Add((user, total));
             }
+
+            return(markedUsers);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
+        public async Task<IActionResult> SelectionDetails(int selectionId)
+        {
+            var markedUsers = await ConstructUsersList(selectionId);
 
             var dictBottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).ToList();
             var dictTopUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).ToList();
@@ -97,40 +100,9 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ExportToExcel(int selectionId)
         {
-            User chief = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
-            List<User> users = await _userRepository.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
+            Selection selection = await _selectionService.GetSelectionById(selectionId);
 
-            Selection selection = await _selectionRepository.GetSelectionById(selectionId);
-
-
-            var parameters = selection.Parameters.ToDictionary(p => p.Id, p => p);
-
-            var markedUsers = new List<(User user, double mark)>(users.Count);
-
-            foreach (var user in users)
-            {
-                var total = 0.0;
-                var marks = new Dictionary<int, List<double>>();
-
-                foreach (var mark in user.Marks)
-                {
-                    if (selection.Parameters.Contains(mark.Parameter))
-                    {
-                        if (!marks.ContainsKey(mark.ParameterId))
-                            marks[mark.ParameterId] = new List<double>();
-
-                        marks[mark.ParameterId].Add(mark.MarkValue);
-                    }
-                }
-
-                foreach (var kv in marks)
-                {
-                    var average = kv.Value.Average();
-                    total += Math.Round(average * parameters[kv.Key].Coefficient, 2);
-                }
-
-                markedUsers.Add((user, total));
-            }
+            var markedUsers = await ConstructUsersList(selectionId);
 
             var dictBottomUsers = markedUsers.OrderBy(u => u.mark).Take(3).ToList();
             var dictTopUsers = markedUsers.OrderByDescending(u => u.mark).Take(3).ToList();
@@ -184,20 +156,20 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllMarks()
         {
-            List<Mark> marks = await _markRepository.GetAllData();
+            List<Mark> marks = await _markService.GetAllData();
             List<User> assessors = new List<User>();
             foreach (var item in marks)
             {
-                assessors.Add(await _userRepository.GetUserById(item.AssessorId));
+                assessors.Add(await _userService.GetUserById(item.AssessorId));
             }
 
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             GetAllMarksViewModel mymodel = new GetAllMarksViewModel();
             mymodel.CurrentUserDepartmentId = user.DepartmentId;
             mymodel.Assessors = assessors;
             mymodel.Marks = marks;
-            mymodel.Parameters = await _parameterRepository.GetAllData();
-            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Parameters = await _parameterService.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
 
             return View(mymodel);
         }
@@ -206,7 +178,7 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllActualMarks()
         {
-            List<Mark> marks = await _markRepository.GetAllData();
+            List<Mark> marks = await _markService.GetAllData();
             List<Mark> actualMarks = new List<Mark>();
             TimeSpan diff;
             foreach(Mark item in marks)
@@ -218,12 +190,12 @@ namespace EmployeePerformanceApp.Controllers
                 }
             }
 
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             GetAllMarksViewModel mymodel = new GetAllMarksViewModel();
             mymodel.CurrentUserDepartmentId = user.DepartmentId;
             mymodel.Marks = actualMarks;
-            mymodel.Parameters = await _parameterRepository.GetAllData();
-            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Parameters = await _parameterService.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
 
             return View(mymodel);
         }
@@ -232,10 +204,10 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMark()
         {
-            User user = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             AddMarkViewModel mymodel = new AddMarkViewModel();
             mymodel.LeadDepartmentId = user.DepartmentId;
-            mymodel.Users = await _userRepository.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
             return View(mymodel);
         }
 
@@ -243,13 +215,13 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMarkAction(int userId)
         {
-            User currentUser = await _userRepository.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            User currentUser = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
 
             AddMarkViewModel mymodel = new AddMarkViewModel();
             mymodel.LeadDepartmentId = currentUser.DepartmentId;
             mymodel.UserId = userId;
-            mymodel.Users = await _userRepository.GetAllData();
-            mymodel.Parameters = await _parameterRepository.GetAllData();
+            mymodel.Users = await _userService.GetAllData();
+            mymodel.Parameters = await _parameterService.GetAllData();
             return View(mymodel);
         }
 

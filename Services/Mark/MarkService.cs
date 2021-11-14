@@ -41,5 +41,10 @@ namespace EmployeePerformanceApp.Services
             };
             await _markRepository.AddMark(mark);
         }
+
+        public async Task<List<Mark>> GetAllData()
+        {
+            return await _markRepository.GetAllData();
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace EmployeePerformanceApp.Services
         Task<bool> CheckIsUserExistByLogin(string login);
         Task DeleteUser(int id);
         Task SetWorkingFlag(int id);
+        Task<User> GetUserById(int id);
+        Task<List<User>> GetUsersByDepartmentIdNotChief(int id);
     }
 }
