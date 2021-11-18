@@ -3,10 +3,10 @@
 <a asp-action="Index">Home</a>
 
 <table class="table">
-    <tr><td>Id</td><td>Name</td><td>Coefficient</td></tr>
+    <tr><td>Id</td><td>Name</td><td>Coefficient</td><td>Department</td></tr>
     @foreach (var item in Model.Parameters)
     {
-        <tr><td>@item.Id</td><td>@item.Name</td><td>@item.Coefficient</td></tr>
+        <tr><td>@item.Id</td><td>@item.Name</td><td>@item.Coefficient</td><td>@item.Department.Name</td></tr>
     }
 </table>
 

@@ -11,5 +11,6 @@ namespace EmployeePerformanceApp.Services
         Task AddSelection(int departmentId, string selectionName, int[] arr);
         Task<List<Selection>> GetAllData();
         Task<Selection> GetSelectionById(int id);
+        Task<List<Selection>> GetAllDataFromYourDepartment(int departmentId);
     }
 }

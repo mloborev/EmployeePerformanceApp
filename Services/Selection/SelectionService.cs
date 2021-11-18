@@ -1,6 +1,9 @@
 ﻿using EmployeePerformanceApp.Models;
 using EmployeePerformanceApp.Repositories;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Services
@@ -9,6 +12,7 @@ namespace EmployeePerformanceApp.Services
     {
         private readonly ISelectionRepository _selectionRepository;
         private readonly IParameterRepository _parameterRepository;
+
         public SelectionService(ISelectionRepository selectionRepository, IParameterRepository parameterRepository)
         {
             _selectionRepository = selectionRepository;
@@ -27,6 +31,11 @@ namespace EmployeePerformanceApp.Services
         public async Task<List<Selection>> GetAllData()
         {
             return await _selectionRepository.GetAllData();
+        }
+
+        public async Task<List<Selection>> GetAllDataFromYourDepartment(int departmentId)
+        {
+            return await _selectionRepository.GetAllDataFromYourDepartment(departmentId);
         }
 
         public async Task<Selection> GetSelectionById(int id)

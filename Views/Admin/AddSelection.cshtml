@@ -2,29 +2,6 @@
 
 <a asp-action="Index">Home</a>
 
-<table class="table">
-    <tr>
-        <td>Id</td>
-        <td>Department</td>
-        <td>Name</td>
-        <td>Parameters</td>
-    </tr>
-    @foreach (var item in Model.Selections)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Department.Name</td>
-            <td>@item.Name</td>
-            <td> 
-                @foreach(Parameter lala in item.Parameters)
-                {
-                    <p>@lala.Name</p>
-                }
-            </td>
-        </tr>
-    }
-</table>
-
 <form method="post" asp-action="AddSelection">
 
     <input type="hidden" value="@Model.DepartmentId" name="departmentId" />
@@ -37,9 +14,7 @@
             {
                 if (parameter.DepartmentId != Model.DepartmentId)
                     continue;
-                <label>
-                    <input type="checkbox" name="myarray" id="myarray" value="@parameter.Id" /> @parameter.Name
-                </label>
+                    <p><input type="checkbox" name="myarray" id="myarray" value="@parameter.Id" /> @parameter.Name</p>
             }
         </div>
     </div>

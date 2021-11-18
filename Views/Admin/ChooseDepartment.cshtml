@@ -1,6 +1,33 @@
-﻿@model IEnumerable<EmployeePerformanceApp.Models.Department>
+﻿@model AddSelectionViewModel
 
 <a asp-action="Index">Home</a>
+
+<h3>Created selections</h3>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Department</td>
+        <td>Name</td>
+        <td>Parameters</td>
+    </tr>
+    @foreach (var item in Model.Selections)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Department.Name</td>
+            <td>@item.Name</td>
+            <td>
+                @foreach (Parameter lala in item.Parameters)
+                {
+                    <p>@lala.Name</p>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<h3>Choose department to create selection</h3>
 
 <table class="table">
     <tr>
@@ -8,7 +35,7 @@
         <td>Name</td>
         <td>Add Selection</td>
     </tr>
-    @foreach (Department department in Model)
+    @foreach (Department department in Model.Departments)
     {
         if (department.Name == "Admin")
             continue;

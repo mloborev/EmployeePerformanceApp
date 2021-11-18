@@ -36,8 +36,11 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ChooseSelection()
         {
+            int currentUserId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
+            User currentUser = await _userService.GetUserById(currentUserId);
+
             ChooseSelectionViewModel mymodel = new ChooseSelectionViewModel();
-            mymodel.Selections = await _selectionService.GetAllData();
+            mymodel.Selections = await _selectionService.GetAllDataFromYourDepartment(currentUser.DepartmentId);
             mymodel.Parameters = await _parameterService.GetAllData();
             return View(mymodel);
         }

@@ -42,7 +42,10 @@ namespace EmployeePerformanceApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ChooseDepartment()
         {
-            return View(await _departmentService.GetAllData());
+            AddSelectionViewModel mymodel = new AddSelectionViewModel();
+            mymodel.Departments = await _departmentService.GetAllData();
+            mymodel.Selections = await _selectionService.GetAllData();
+            return View(mymodel);
         }
 
         [Authorize(Roles = "Admin")]
@@ -67,7 +70,7 @@ namespace EmployeePerformanceApp.Controllers
             mymodel.Departments = await _departmentService.GetAllData();
             mymodel.Selections = await _selectionService.GetAllData();
             mymodel.Parameters = await _parameterService.GetAllData();
-            return View(mymodel);
+            return RedirectToAction("ChooseDepartment", "Admin");
         }
 
         [Authorize(Roles = "Admin")]

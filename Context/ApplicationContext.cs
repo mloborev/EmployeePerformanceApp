@@ -226,9 +226,49 @@ namespace EmployeePerformanceApp.Context
             };
 
 
-/*            Parameter parameter1 = new Parameter { Id = 1, Name = "Work quality", Coefficient = 1, DepartmentId = programmersDepartment.Id};
-            Parameter parameter2 = new Parameter { Id = 2, Name = "Skills level", Coefficient = 1, DepartmentId = programmersDepartment.Id };
-            Parameter parameter3 = new Parameter { Id = 3, Name = "Work speed", Coefficient = 1, DepartmentId = programmersDepartment.Id };*/
+            //progParameters
+            Parameter parameter1 = new Parameter { Id = 1, Name = "Team communication", Coefficient = 0.94, DepartmentId = programmersDepartment.Id};
+            Parameter parameter2 = new Parameter { Id = 2, Name = "Corporate communication", Coefficient = 0.3, DepartmentId = programmersDepartment.Id };
+            Parameter parameter3 = new Parameter { Id = 3, Name = "English language level", Coefficient = 0.92, DepartmentId = programmersDepartment.Id };
+            Parameter parameter4 = new Parameter { Id = 4, Name = "3rd party communication", Coefficient = 0.21, DepartmentId = programmersDepartment.Id };
+            Parameter parameter5 = new Parameter { Id = 5, Name = "Work quality", Coefficient = 0.36, DepartmentId = programmersDepartment.Id };
+            Parameter parameter6 = new Parameter { Id = 6, Name = "Skills level", Coefficient = 0.91, DepartmentId = programmersDepartment.Id };
+            Parameter parameter7 = new Parameter { Id = 7, Name = "Work speed", Coefficient = 0.82, DepartmentId = programmersDepartment.Id };
+            Parameter parameter8 = new Parameter { Id = 8, Name = "Responsibility level", Coefficient = 0.59, DepartmentId = programmersDepartment.Id };
+            Parameter parameter9 = new Parameter { Id = 9, Name = "Level of independence", Coefficient = 0.66, DepartmentId = programmersDepartment.Id };
+            Parameter parameter10 = new Parameter { Id = 10, Name = "Leadership skills", Coefficient = 0.71, DepartmentId = programmersDepartment.Id };
+            Parameter parameter11 = new Parameter { Id = 11, Name = "BUM evaluation", Coefficient = 0.88, DepartmentId = programmersDepartment.Id };
+            Parameter parameter12 = new Parameter { Id = 12, Name = "Involment level", Coefficient = 0.93, DepartmentId = programmersDepartment.Id };
+
+
+            //lawParameters
+            Parameter parameter13 = new Parameter { Id = 13, Name = "Team communication", Coefficient = 0.43, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter14 = new Parameter { Id = 14, Name = "Corporate communication", Coefficient = 0.09, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter15 = new Parameter { Id = 15, Name = "English language level", Coefficient = 0.80, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter16 = new Parameter { Id = 16, Name = "3rd party communication", Coefficient = 0.62, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter17 = new Parameter { Id = 17, Name = "Work quality", Coefficient = 0.59, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter18 = new Parameter { Id = 18, Name = "Skills level", Coefficient = 0.85, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter19 = new Parameter { Id = 19, Name = "Work speed", Coefficient = 0.76, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter20 = new Parameter { Id = 20, Name = "Responsibility level", Coefficient = 0.21, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter21 = new Parameter { Id = 21, Name = "Level of independence", Coefficient = 0.84, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter22 = new Parameter { Id = 22, Name = "Leadership skills", Coefficient = 0.37, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter23 = new Parameter { Id = 23, Name = "BUM evaluation", Coefficient = 0.03, DepartmentId = lawyersDepartment.Id };
+            Parameter parameter24 = new Parameter { Id = 24, Name = "Involment level", Coefficient = 0.15, DepartmentId = lawyersDepartment.Id };
+
+
+            //testParameters
+            Parameter parameter25 = new Parameter { Id = 25, Name = "Team communication", Coefficient = 0.64, DepartmentId = testersDepartment.Id };
+            Parameter parameter26 = new Parameter { Id = 26, Name = "Corporate communication", Coefficient = 0.87, DepartmentId = testersDepartment.Id };
+            Parameter parameter27 = new Parameter { Id = 27, Name = "English language level", Coefficient = 0.97, DepartmentId = testersDepartment.Id };
+            Parameter parameter28 = new Parameter { Id = 28, Name = "3rd party communication", Coefficient = 0.25, DepartmentId = testersDepartment.Id };
+            Parameter parameter29 = new Parameter { Id = 29, Name = "Work quality", Coefficient = 0.12, DepartmentId = testersDepartment.Id };
+            Parameter parameter30 = new Parameter { Id = 30, Name = "Skills level", Coefficient = 0.84, DepartmentId = testersDepartment.Id };
+            Parameter parameter31 = new Parameter { Id = 31, Name = "Work speed", Coefficient = 0.35, DepartmentId = testersDepartment.Id };
+            Parameter parameter32 = new Parameter { Id = 32, Name = "Responsibility level", Coefficient = 0.22, DepartmentId = testersDepartment.Id };
+            Parameter parameter33 = new Parameter { Id = 33, Name = "Level of independence", Coefficient = 0.52, DepartmentId = testersDepartment.Id };
+            Parameter parameter34 = new Parameter { Id = 34, Name = "Leadership skills", Coefficient = 0.45, DepartmentId = testersDepartment.Id };
+            Parameter parameter35 = new Parameter { Id = 35, Name = "BUM evaluation", Coefficient = 0.71, DepartmentId = testersDepartment.Id };
+            Parameter parameter36 = new Parameter { Id = 36, Name = "Involment level", Coefficient = 0.77, DepartmentId = testersDepartment.Id };
 
             modelBuilder.Entity<Selection>(x => {
                 x.Navigation(s => s.Parameters).AutoInclude();
@@ -244,7 +284,7 @@ namespace EmployeePerformanceApp.Context
                 lawUser1, lawUser2, lawUser3, lawLead, lawChief,
                 testUser1, testUser2, testUser3, testLead, testChief
             });
-            //modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, parameter3, parameter4 });
+            modelBuilder.Entity<Parameter>().HasData(new Parameter[] { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9, parameter10, parameter11, parameter12, parameter13, parameter14, parameter15, parameter16, parameter17, parameter18, parameter19, parameter20, parameter21, parameter22, parameter23, parameter24, parameter25, parameter26, parameter27, parameter28, parameter29, parameter30, parameter31, parameter32, parameter33, parameter34, parameter35, parameter36});
             //modelBuilder.Entity<Workplace>().HasOne(x => x.Reservation).WithOne(x => x.Workplace);
 
             base.OnModelCreating(modelBuilder);

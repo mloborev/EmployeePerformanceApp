@@ -32,6 +32,11 @@ namespace EmployeePerformanceApp.Repositories
             return await db.Selections.Include(x => x.Department).Include(x => x.Parameters).ToListAsync();
         }
 
+        public async Task<List<Selection>> GetAllDataFromYourDepartment(int departmentId)
+        {
+            return await db.Selections.Where(x => x.DepartmentId == departmentId).Include(x => x.Department).Include(x => x.Parameters).ToListAsync();
+        }
+
         public async Task<List<Selection>> GetSelectionsByIds(int[] ids)
         {
             return await db.Selections.Include(x => x.Department).Where(x => ids.Contains(x.Id)).ToListAsync();
