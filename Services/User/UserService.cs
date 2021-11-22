@@ -26,6 +26,16 @@ namespace EmployeePerformanceApp.Services
             return await _userRepository.GetAllData();
         }
 
+        public async Task<List<User>> GetAllDataForDepartmentForLead(int id)
+        {
+            return await _userRepository.GetAllDataForDepartmentForLead(id);
+        }
+
+        public async Task<List<User>> GetAllDataForDepartmentForChief(int id)
+        {
+            return await _userRepository.GetAllDataForDepartmentForChief(id);
+        }
+
         public async Task<bool> CheckIsUserExistByLogin(string login)
         {
             return await _userRepository.CheckIsUserExistByLogin(login);
@@ -34,6 +44,11 @@ namespace EmployeePerformanceApp.Services
         public async Task<User> GetUserById(int id)
         {
             return await _userRepository.GetUserById(id);
+        }
+
+        public async Task<User> GetUserByName(string name)
+        {
+            return await _userRepository.GetUserByName(name);
         }
 
         public async Task<List<User>> GetUsersByDepartmentIdNotChief(int id)

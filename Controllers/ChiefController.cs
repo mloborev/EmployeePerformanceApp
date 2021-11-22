@@ -34,6 +34,55 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Chief")]
         [HttpGet]
+        public async Task<IActionResult> AddMarkViaTable()
+        {
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+
+            AddMarkViewModel mymodel = new AddMarkViewModel();
+            mymodel.Users = await _userService.GetAllDataForDepartmentForChief(user.DepartmentId);
+            mymodel.Parameters = await _parameterService.GetAllDataForDepartment(user.DepartmentId);
+            mymodel.LeadDepartmentId = user.DepartmentId;
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpPost]
+        public async Task<IActionResult> JSAddMarkAction(string userName, string parameterName, string mark)
+        {
+            User user = await _userService.GetUserByName(userName);
+            Parameter parameter = await _parameterService.GetParameterByName(parameterName);
+
+            await _markService.AddMark(user.Id, parameter.Id, Convert.ToInt32(mark), "null");
+
+            return RedirectToAction("AddMarkViaTable", "Chief");
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
+        public async Task<IActionResult> SeeAllSelections()
+        {
+            int currentUserId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
+            User currentUser = await _userService.GetUserById(currentUserId);
+
+            var allSelections = await _selectionService.GetAllDataFromYourDepartment(currentUser.DepartmentId);
+            List<SelectionWithUsersModel> allSelectionsWithUsers = new List<SelectionWithUsersModel>();
+
+            for(int i = 0; i < allSelections.Count; i++)
+            {
+                var markedUsers = await ConstructUsersList(allSelections[i].Id);
+
+                allSelectionsWithUsers.Add(new SelectionWithUsersModel
+                { 
+                    Selection = allSelections[i], 
+                    SelectionUsers = markedUsers.OrderByDescending(u => u.mark).ToList() 
+                });
+            }
+
+            return View(allSelectionsWithUsers);
+        }
+
+        [Authorize(Roles = "Chief")]
+        [HttpGet]
         public async Task<IActionResult> ChooseSelection()
         {
             int currentUserId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value);
@@ -49,9 +98,7 @@ namespace EmployeePerformanceApp.Controllers
         {
             User chief = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
             List<User> users = await _userService.GetUsersByDepartmentIdNotChief(chief.DepartmentId);
-
             Selection selection = await _selectionService.GetSelectionById(selectionId);
-
             var parameters = selection.Parameters.ToDictionary(p => p.Id, p => p);
 
             var markedUsers = new List<(User user, double mark)>(users.Count);
@@ -78,7 +125,7 @@ namespace EmployeePerformanceApp.Controllers
                     total += Math.Round(average * parameters[kv.Key].Coefficient, 2);
                 }
 
-                markedUsers.Add((user, total));
+                markedUsers.Add((user, Math.Round(total, 2)));
             }
 
             return(markedUsers);

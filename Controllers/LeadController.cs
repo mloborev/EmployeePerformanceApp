@@ -16,7 +16,6 @@ namespace EmployeePerformanceApp.Controllers
         private readonly IUserService _userService;
         private readonly IParameterService _parameterService;
 
-
         public LeadController(IMarkService markService, IUserService userService, IParameterService parameterService)
         {
             _markService = markService;
@@ -31,6 +30,19 @@ namespace EmployeePerformanceApp.Controllers
 
         [Authorize(Roles = "Lead")]
         [HttpGet]
+        public async Task<IActionResult> AddMarkViaTable()
+        {
+            User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+
+            AddMarkViewModel mymodel = new AddMarkViewModel();
+            mymodel.Users = await _userService.GetAllDataForDepartmentForLead(user.DepartmentId);
+            mymodel.Parameters = await _parameterService.GetAllDataForDepartment(user.DepartmentId);
+            mymodel.LeadDepartmentId = user.DepartmentId;
+            return View(mymodel);
+        }
+
+        [Authorize(Roles = "Lead")]
+        [HttpGet]
         public async Task<IActionResult> AddMark()
         {
             User user = await _userService.GetUserById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
@@ -39,14 +51,6 @@ namespace EmployeePerformanceApp.Controllers
             mymodel.Users = await _userService.GetAllData();
             return View(mymodel);
         }
-
-        /*[Authorize(Roles = "Chief")]
-        [HttpPost]
-        public async Task<IActionResult> AddMark(int parameterId, int markValue, string markDescription)
-        {
-            await _markService.AddMark(parameterId, markValue, markDescription);
-            return RedirectToAction("Index", "Chief");
-        }*/
 
         [Authorize(Roles = "Lead")]
         [HttpGet]
@@ -68,6 +72,17 @@ namespace EmployeePerformanceApp.Controllers
         {
             await _markService.AddMark(userId, parameterId, markValue, markDescription);
             return RedirectToAction("AddMark", "Lead");
+        }
+
+        [Authorize(Roles = "Lead")]
+        [HttpPost]
+        public async Task<IActionResult> JSAddMarkAction(string userName, string parameterName, string mark)
+        {
+            User user = await _userService.GetUserByName(userName);
+            Parameter parameter = await _parameterService.GetParameterByName(parameterName);
+
+            await _markService.AddMark(user.Id, parameter.Id, Convert.ToInt32(mark), "null");
+            return RedirectToAction("AddMarkViaTable", "Lead");
         }
     }
 }

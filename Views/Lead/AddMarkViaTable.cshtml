@@ -1,0 +1,92 @@
+﻿@model AddMarkViewModel
+
+@{
+    Layout = null;
+}
+
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <a asp-action="Index">Home</a>
+
+    <section class="table">
+        <div class="row legend">
+            <div class="column">Users</div>
+            @foreach (var item in Model.Parameters)
+            {
+                <div class="column">@item.Name</div>
+            }
+        </div>
+        @foreach (var item in Model.Users)
+        {
+            <div class="row">
+                <div class="column">@item.Name</div>
+
+                @foreach (var kk in Model.Parameters)
+                {
+                    <input type="number" class="column" oninput="minMax(event)" onkeydown="send(event,'@item.Name', '@kk.Name')" />
+                }
+            </div>
+        }
+    </section>
+
+
+    <style>
+        html {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+        }
+
+        .table {
+            display: grid;
+            background: rgb(46, 46, 49);
+            color: white;
+            width: 98vw;
+            overflow-x: scroll;
+            padding: 0 0 30px;
+        }
+
+        .row {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 250px;
+            padding: 0 30px;
+        }
+
+            .row:nth-child(2n+1) {
+                background: rgb(61 61 61);
+            }
+
+        .legend {
+            background: rgb(64, 64, 68);
+            position: sticky;
+            padding: 20px 30px;
+            top: 0;
+        }
+
+        .column {
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            background: none;
+            height: 60px;
+            border: 1px rgb(44 44 44) solid;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="\js\site.js" charset="utf-8"></script>

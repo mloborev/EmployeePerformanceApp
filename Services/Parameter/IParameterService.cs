@@ -10,6 +10,8 @@ namespace EmployeePerformanceApp.Services
     {
         Task AddParameter(int departmentId, string name, double coefficient);
         Task<List<Parameter>> GetAllData();
+        Task<Parameter> GetParameterByName(string name);
         Task DeleteParameter(int parameterId);
+        Task<List<Parameter>> GetAllDataForDepartment(int id);
     }
 }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SelectionWithUsersModel>
+
+<a asp-action="Index">Home</a>
+
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>Parameters</td>
+        <td>Users</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Selection.Name</td>
+            <td>
+                @foreach (Parameter lala in item.Selection.Parameters)
+                {
+                    <p>@lala.Name</p>
+                }
+            </td>
+            <td>
+                @foreach (var lala in item.SelectionUsers)
+                {
+                    <p>@lala.user.Name @lala.user.Surname, Mark: @lala.mark</p>
+                }
+            </td>
+        </tr>
+    }
+</table>

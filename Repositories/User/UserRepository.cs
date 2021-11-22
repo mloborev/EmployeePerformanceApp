@@ -71,9 +71,25 @@ namespace EmployeePerformanceApp.Repositories
             return await db.Users.Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Include(x => x.Marks).ToListAsync();
         }
 
+        public async Task<List<User>> GetAllDataForDepartmentForLead(int id)
+        {
+            return await db.Users.Where(x => x.DepartmentId == id && x.RoleId == 4).Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Include(x => x.Marks).ToListAsync();
+        }
+
+        public async Task<List<User>> GetAllDataForDepartmentForChief(int id)
+        {
+            return await db.Users.Where(x => x.DepartmentId == id && x.RoleId == 3).Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Include(x => x.Marks).ToListAsync();
+        }
+
         public async Task<User> GetUserById(int id)
         {
             User user = await db.Users.Include(x => x.Marks).Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(x => x.Id == id).FirstOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<User> GetUserByName(string name)
+        {
+            User user = await db.Users.Include(x => x.Marks).Include(u => u.Role).Include(u => u.Status).Include(u => u.Department).Where(x => x.Name == name).FirstOrDefaultAsync();
             return user;
         }
 
